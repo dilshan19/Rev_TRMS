@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet  {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		System.out.println("Hello Post");
 		PrintWriter pw = resp.getWriter();
-		pw.write("<h1>Post method from helloWorld servlet!</h1>");
+		pw.write("<h3>Post method from HelloWorld servlet!</h3>");
 	}
 	
 }
