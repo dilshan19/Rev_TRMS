@@ -1,0 +1,1 @@
+2019-10-15 20:30:44 TRACE root:44 - User logged in

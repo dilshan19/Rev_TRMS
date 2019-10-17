@@ -1,30 +1,71 @@
 package com.revature.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.revature.pojo.User;
+import com.revature.service.UserService;
+import com.revature.service.UserServiceImpl;
 
-public class LoginServlet extends HttpServlet  {
+/**
+ * Servlet implementation class LoginServlet
+ */
+public class LoginServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private static UserService userService = new UserServiceImpl();
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		System.out.println("Hello Get!");
-		PrintWriter pw = resp.getWriter();
-		String position = req.getParameter("position");
-		String name = req.getParameter("name");
-		
-		pw.write("<h1>Hello " + position +" : " + name + "!</h1>");
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public LoginServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		System.out.println("Hello Post");
-		PrintWriter pw = resp.getWriter();
-		pw.write("<h3>Post method from HelloWorld servlet!</h3>");
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		User user = userService.loginUser(username, password);
+		if (user != null) {
+			response.getWriter().write("Welcome to your homepage" + user.getFullName());
+		} else {
+			response.getWriter().write("Invalid login credentials");
+		}
 	}
-	
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		User user = userService.loginUser(username, password);
+		if (user != null) {
+			request.getSession().setAttribute("email", user.getEmail());
+			request.getSession().setAttribute("pass", user.getPassword());
+			if (user.getManagerStatus().equals("employee")) {
+				response.sendRedirect("employee");
+			} else if(user.getManagerStatus().equals("supervisor")){
+				response.sendRedirect("manager");
+			} else if(user.getManagerStatus().equals("departmentHead")){
+				response.sendRedirect("departmentHead");
+			} else if(user.getManagerStatus().equals("benco")){
+					response.sendRedirect("benco");
+			} else {
+				System.out.println("Couldn't find where to redirect you.");
+			}
+		} else {
+			response.getWriter().write("Sorry, but you were not able to login correctly :(");
+		}
+	}
+
 }
