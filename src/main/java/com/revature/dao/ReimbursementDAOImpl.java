@@ -27,7 +27,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			String sql = "insert into reimbursements(email,date_,location_,originalamount,tentativeamount,eventtype,description,format,isDS,isDH,isBC,isBCAltered,hasGrade) " + 
 			"values(?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?);"; 
 			if(conn == null) {
-				LoggerUtil.debug("Conn null");
+				LoggerUtil.error("Conn null");
 			}
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			int count = 1;
