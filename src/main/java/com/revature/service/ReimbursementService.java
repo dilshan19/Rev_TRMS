@@ -8,7 +8,7 @@ public class ReimbursementService {
 
 	private static ReimbursementDAO reimbursementService = new ReimbursementDAOImpl();
 	
-	public boolean addReimbursement(Reimbursement r) {
+	public boolean addReimbursement(Reimbursement r) {//add input checks here
 		boolean check = reimbursementService.insert(r);
 		return check;
 	}

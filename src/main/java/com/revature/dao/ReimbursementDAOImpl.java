@@ -24,7 +24,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 		info(re.toString());
 
 		try {
-			String sql = "insert into \"TRMS\".reimbursements(email,date_,location_,originalamount,tentativeamount,eventtype,description,format,isDS,isDH,isBC,isBCAltered,hasGrade) " + 
+			String sql = "insert into reimbursements(email,date_,location_,originalamount,tentativeamount,eventtype,description,format,isDS,isDH,isBC,isBCAltered,hasGrade) " + 
 			"values(?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?);"; 
 			if(conn == null) {
 				LoggerUtil.debug("Conn null");

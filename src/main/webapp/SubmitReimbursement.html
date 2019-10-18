@@ -14,18 +14,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="">
     <script>
-        let today = new Date();
-        let dd = today.getDate();
-        let mm = today.getMonth()+1; //January is 0!
-        let yyyy = today.getFullYear();
-        if(dd<10){
-            dd='0'+dd
-        } 
-        if(mm<10){
-            mm='0'+mm
-        } 
-        today = yyyy+'-'+mm+'-'+dd;
-        document.getElementById("datefield").setAttribute("min", today);
+    window.onload = function(){
+    	updateDate();
+    }
+    function updateDate(){
+		let d = new Date();
+		let new_d = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+		document.getElementById("datefield").min = new_d;
+    }
     </script>
 </head>
 
@@ -53,7 +49,7 @@
             <input type="text" name="location" required>
             <br>
             Event date:<br>
-            <input type="date" name="date" id ="datefield" required max="2100-12-31">
+            <input type="date" name="date" id ="datefield" required max="2100-12-31" min="2019-10-17">
             <br>    
             Requested amount:<br>
             <input type="text" name="amount" required>
