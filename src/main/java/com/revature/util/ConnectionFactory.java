@@ -26,7 +26,8 @@ public class ConnectionFactory {
 
 	//private static final String PROPERTIES_FILE = "src/main/resources/database.properties";
 	//private static final String PROPERTIES_FILE = "database.properties";
-	private static final String PROPERTIES_FILE = "C:\\Totally Not a Revature Repository\\P1-WIP\\src\\main\\webapp\\WEB-INF\\database.properties";
+	private static final String PROPERTIES_FILE = "D:/Users/Dilshan/Desktop/code/STS/Project1/src/main/resources/database.properties";
+	//private static final String PROPERTIES_FILE = "C:\\Totally Not a Revature Repository\\P1-WIP\\src\\main\\webapp\\WEB-INF\\database.properties";
 
 	private static ConnectionFactory cf;
 
