@@ -34,3 +34,20 @@ create table bencoinfo (
 );
 
 insert into bencoinfo values ('test', 'benco', 'test@gmail.com', 'pass');
+
+create table requests (
+	requestID   varchar,
+	requestorEmail  varchar,
+	eventdate varchar,
+	eventLocation varchar,
+	eventDescription varchar,
+	event Cost number,
+	reimbursementamount  number,
+	eventtype varchar,
+	gradingformat varchar,
+	supervisorapproval boolean,
+	dhapproval boolean,
+	bencoapproval boolean,
+	modifiedbybenco boolean,
+	gradeorpresentationstatus boolean
+);
