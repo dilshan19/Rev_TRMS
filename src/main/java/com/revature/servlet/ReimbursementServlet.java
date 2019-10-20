@@ -2,14 +2,18 @@ package com.revature.servlet;
 
 import java.io.IOException;
 
+
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.pojo.Reimbursement;
 import com.revature.service.ReimbursementService;
 
@@ -20,20 +24,20 @@ public class ReimbursementServlet extends HttpServlet  {
 	private ReimbursementService reimburseServ = new ReimbursementService();
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		debug("Get from AddRServlet");
-		PrintWriter pw = resp.getWriter();
-		String type = req.getParameter("type");
-		String location = req.getParameter("location");
-		String get_date = req.getParameter("date");
-		
-		Double amount = Double.parseDouble(req.getParameter("amount"));
-		String description = req.getParameter("description");
-		String format = req.getParameter("format");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		ObjectMapper om = new ObjectMapper();
 
-		info("Date: " + get_date);
-		pw.write("type: " + type + " location: " + location + " amount: "+amount+" description: " + description + "Date: " + get_date + "format: "
-				+format);
+		String name = request.getPathInfo();
+		System.out.println("Name: " + name);
+
+		if (name != null && !"".equals(name.substring(1))) {
+			//response.getWriter().write(om.writeValueAsString(reimburseServ.);
+		} else {
+
+			ArrayList<Reimbursement> reimbList = reimburseServ.getAllReimbursements();
+
+			response.getWriter().write(om.writeValueAsString(reimbList));
+		}
 	}
 	
 	@Override

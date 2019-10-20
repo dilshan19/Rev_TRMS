@@ -1,12 +1,19 @@
 package com.revature.dao;
 
 import static com.revature.util.LoggerUtil.error;
+
 import static com.revature.util.LoggerUtil.info;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 
 import com.revature.util.ConnectionFactory;
 import com.revature.util.LoggerUtil;
@@ -15,8 +22,48 @@ import com.revature.pojo.Reimbursement;
 public class ReimbursementDAOImpl implements ReimbursementDAO {
 	private static Connection conn = ConnectionFactory.getConnection();
 	
-	public Reimbursement getR(String email) {
-		return null;
+	public ArrayList<Reimbursement> getR(String email) {
+		ArrayList<Reimbursement> rList = new ArrayList<Reimbursement>();
+		try {
+			PreparedStatement stmt;
+			if(email == null) {
+				String sql = "select * from reimbursements"; 
+				stmt = conn.prepareStatement(sql);
+			}else {
+				String sql = "select * from reimbursements where email = ?"; 
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, email);
+				LoggerUtil.info(stmt.toString());
+			}
+			ResultSet r = stmt.executeQuery();
+			Reimbursement tempR;
+			int loopCount = 0;
+			while(r.next() != false) {
+				int count = 2;
+				tempR = new Reimbursement();
+				tempR.setRequestorEmail(r.getString(count++));				
+				Date temp = r.getDate(count++);
+				tempR.setDate(temp.toLocalDate());//--> buggy line somehow. wont print stacktrace on my STS so Im not sure what is causing err
+				tempR.setLocation(r.getString(count++));
+				tempR.setOriginalAmount(r.getDouble(count++));
+				tempR.setTentativeAmount(r.getDouble(count++));
+				tempR.setType(r.getString(count++));
+				tempR.setDescription(r.getString(count++));
+				tempR.setFormat(r.getString(count++));
+				tempR.setDSApproved(r.getBoolean(count++));
+				tempR.setDHApproved(r.getBoolean(count++));
+				tempR.setBCApproved(r.getBoolean(count++));
+				tempR.setBCAltered(r.getBoolean(count++));
+				tempR.setGradeUploaded(r.getBoolean(count++));	
+				rList.add(tempR);
+				loopCount++;
+			}
+			r.close();
+		}catch(SQLException e){
+			error(e);
+			e.printStackTrace();
+		}
+		return ( rList.size() != 0 ) ? rList : null;
 	}
 
 	public boolean insert(Reimbursement re) {
