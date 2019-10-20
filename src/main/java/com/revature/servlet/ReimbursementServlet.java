@@ -28,11 +28,13 @@ public class ReimbursementServlet extends HttpServlet  {
 		ObjectMapper om = new ObjectMapper();
 
 		String name = request.getPathInfo();
-		System.out.println("Name: " + name);
+		info("Name: " + name);
 
 		if (name != null && !"".equals(name.substring(1))) {
 			//response.getWriter().write(om.writeValueAsString(reimburseServ.);
+			info("grabbing individual reimb");
 		} else {
+			info("grabbing all reimb");
 
 			ArrayList<Reimbursement> reimbList = reimburseServ.getAllReimbursements();
 
