@@ -8,5 +8,6 @@ public interface ReimbursementDAO {
 	
 	public ArrayList<Reimbursement> getR(String email);
 	public boolean insert(Reimbursement re);//update or insert a Reimbursement entry
+	public boolean update(String id, int field);
 
 }

@@ -5,19 +5,20 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Reimbursement {
+	private int id;
 	private String requestorEmail;
 	private String location;
+	private LocalDate date;
 	private String type;
 	private String description;
 	private String format;
-	private LocalDate date;
 	private double originalAmount;
 	private double tentativeAmount;
+	private boolean isGradeUploaded = false;
 	private boolean isDSApproved = false;
 	private boolean isDHApproved = false;
 	private boolean isBCApproved = false;
 	private boolean isBCAltered = false;
-	private boolean isGradeUploaded = false;
 	
 	public Reimbursement() {
 		super();
@@ -36,7 +37,14 @@ public class Reimbursement {
 		this.originalAmount = originalAmount;
 		this.tentativeAmount = tentativeAmount;
 	}
+	
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getRequestorEmail() {
 		return requestorEmail;
 	}

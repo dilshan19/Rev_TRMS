@@ -1,8 +1,6 @@
 package com.revature.dao;
 
-import static com.revature.util.LoggerUtil.error;
-
-import static com.revature.util.LoggerUtil.info;
+import static com.revature.util.LoggerUtil.*;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -10,9 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 
 import com.revature.util.ConnectionFactory;
@@ -37,7 +32,6 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			}
 			ResultSet r = stmt.executeQuery();
 			Reimbursement tempR;
-			int loopCount = 0;
 			while(r.next() != false) {
 				int count = 2;
 				tempR = new Reimbursement();
@@ -56,7 +50,6 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				tempR.setBCAltered(r.getBoolean(count++));
 				tempR.setGradeUploaded(r.getBoolean(count++));	
 				rList.add(tempR);
-				loopCount++;
 			}
 			r.close();
 		}catch(SQLException e){
@@ -68,7 +61,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 
 	public boolean insert(Reimbursement re) {
 		int result = 0;
-		info(re.toString());
+		debug(re.toString());
 
 		try {
 			String sql = "insert into reimbursements(email,date_,location_,originalamount,tentativeamount,eventtype,description,format,isDS,isDH,isBC,isBCAltered,hasGrade) " + 
@@ -101,6 +94,12 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 
 		}
 		return result != 0;
+	}
+
+	@Override
+	public boolean update(String id, int field) {
+		
+		return false;
 	}
 	
 	
