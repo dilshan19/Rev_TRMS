@@ -3,10 +3,12 @@ package com.revature.servlet;
 import java.io.IOException;
 
 
+
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +34,7 @@ public class ReimbursementServlet extends HttpServlet  {
 
 		if (name != null && !"".equals(name.substring(1))) {
 			//response.getWriter().write(om.writeValueAsString(reimburseServ.);
-			info("grabbing individual reimb");
+			info("grabbing individual reimb..");
 		} else {
 			info("grabbing all reimb");
 
@@ -74,7 +76,11 @@ public class ReimbursementServlet extends HttpServlet  {
 
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		super.doPut(req, resp);
+		String name = req.getPathInfo();
+		info("whole: " + name);
+		String id = name.substring(1);
+		info("url: " + id);
+			
 		
 	}
 	

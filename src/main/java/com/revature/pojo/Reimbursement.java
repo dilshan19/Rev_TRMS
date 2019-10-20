@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Reimbursement {
-	private int id;
+	private int id = 0;
 	private String requestorEmail;
 	private String location;
 	private LocalDate date;

@@ -19,4 +19,8 @@ public class ReimbursementService {
 		return reimbursementService.getR(null);
 	}
 	
+	public boolean updateReimbTable(int id, int field) {
+		return(reimbursementService.update( id,  field));
+	}
+	
 }
