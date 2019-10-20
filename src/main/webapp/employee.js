@@ -1,7 +1,7 @@
 // Find a <table> element with id="myTable":
 var table = document.getElementById("employee-table");
 var button = document.getElementById("employee-submit-request");
-button.addEventListener("click", addRow)
+/* button.addEventListener("click", addRow) */
 
 function addRow(event){
     // Create an empty <tr> element and add it to the 1st position of the table:
