@@ -51,7 +51,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				tempR.setBCApproved(r.getBoolean(count++));
 				tempR.setBCAltered(r.getBoolean(count++));
 				tempR.setGradeUploaded(r.getBoolean(count++));
-				info(tempR.toString());
+				//info(tempR.toString());
 				rList.add(tempR);
 			}
 			r.close();

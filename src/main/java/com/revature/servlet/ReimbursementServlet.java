@@ -4,11 +4,11 @@ import java.io.IOException;
 
 
 
+
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,21 +23,20 @@ import static com.revature.util.LoggerUtil.*;
 
 public class ReimbursementServlet extends HttpServlet  {
 	private static final long serialVersionUID = 1L;
-	private ReimbursementService reimburseServ = new ReimbursementService();
+	private static ReimbursementService reimburseServ = new ReimbursementService();
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		ObjectMapper om = new ObjectMapper();
 
 		String name = request.getPathInfo();
-		info("Name: " + name);
+		debug("(REIMBSERVLET) doGet, ext: " + name);
 
-		if (name != null && !"".equals(name.substring(1))) {
-			//response.getWriter().write(om.writeValueAsString(reimburseServ.);
-			info("grabbing individual reimb..");
-		} else {
-			info("grabbing all reimb");
-
+		if (name == null) {
+			response.sendRedirect("employee.html");
+		} else { //grab all reimbs from non-requestor pages
+			debug("grabbing all reimb, extension: " + name);
+			
 			ArrayList<Reimbursement> reimbList = reimburseServ.getAllReimbursements(null);
 
 			response.getWriter().write(om.writeValueAsString(reimbList));
@@ -46,8 +45,8 @@ public class ReimbursementServlet extends HttpServlet  {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		debug("Post from AddRServlet");
-		//todo: figure out how to get the email without the client re inputting
+		String name = req.getPathInfo();
+		debug("(REIMBSERVLET) doGet, ext: " + name);		//todo: figure out how to get the email without the client re inputting
 		Reimbursement reimb = new Reimbursement();
 		PrintWriter pw = resp.getWriter();		
 		reimb.setRequestorEmail(req.getParameter("email"));
@@ -63,9 +62,7 @@ public class ReimbursementServlet extends HttpServlet  {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String date = req.getParameter("eventdate");
-		debug("raw date: " + date);
 		LocalDate localDate = LocalDate.parse(date, formatter);
-		debug("formatted date: " + localDate);		
 		reimb.setDate(localDate);
 		
 		Double amount = Double.parseDouble(req.getParameter("cost"));

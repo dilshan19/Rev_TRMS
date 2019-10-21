@@ -1,35 +1,27 @@
 window.onload = function() {
-    this.getAllReimbursements(); 
+    this.console.log("Hello World");
+    this.getMyReimbursements(); 
 }
 
-function displayReimbursementList(reimb) {
-    let tableBody = document.getElementById("employee-table").getElementsByTagName('tbody')[0];
+function displayReimbursementList(rList) {
+    let tableBody = document.getElementById("reimbTable").getElementsByTagName('tbody')[0];
     let count;
-    for(let i = 0; i < reimb.length; i++) {
+    for(let i = 0; i < rList.length; i++) {
         let row = tableBody.insertRow(-1);
-        row.setAttribute("name",i);
-        //row.innerHTML = "id=\"i\"";
+        console.log(rList[i]);
         count = 0;
-        for (let property in reimb[i]) {
-            if (reimb[i].hasOwnProperty(property)) {
-                let val = reimb[i][property];
+        for (let property in rList[i]) {
+            if (rList[i].hasOwnProperty(property)) {
+                let val = rList[i][property];
                 let cell = row.insertCell(count); 
-                if(count == 0){
-                    let cell2 = row.insertCell(count++); 
-                    cell2.innerHTML = "<tr><td><div><button class=\"option-button\" id=\"accept\" name=\""+val+"\">"+
-                    "<span>Accept</span></button></div><div><button class=\"option-button\" id=\"deny\">"+
-                    "<span>Deny</span></button></div></td></tr>";
-                    let cell = row.insertCell(count);
-                    cell.innerHTML = val;     
-                    //row.setAttribute("id",val);
-                }else if(count == 4){
+                if(count == 3){
                     let d = val.dayOfMonth;
                     let m = val.monthValue + 1; // Month is 0-indexed
                     let y = val.year;
                     cell.innerHTML = m+"-"+d+"-"+y;
-                }else if(count == 8){
+                }else if(count == 7){
                     cell.innerHTML = "$" + val;
-                }else if(count > 9){
+                }else if(count > 8){
                     cell.innerHTML = (val === true) ? "Yes" : "No";
                 }else{
                     cell.innerHTML = val;    
@@ -37,27 +29,25 @@ function displayReimbursementList(reimb) {
                 count++;
             }
           }
+
     }
-    buttonListener();
+    //buttonListener();
 }
 
-function getAllReimbursements() {
+function getMyReimbursements() {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                console.log(xhr.responseText);
-                //displayReimbursementList(JSON.parse(xhr.responseText));
+                console.log("Break1: ");
+                displayReimbursementList(JSON.parse(xhr.responseText));
             } else {
-                document.getElementById("employee-table").innerHTML = "Failed to retrieve reimbursement";
+                console.log("Failed to retrieve reimbursement");
             }
         } else {
-            //console.log( xhr.readyState );
-            //  console.log( xhr.responseText );
-
-            document.getElementById("employee-table").innerHTML = "Fetching Request...";
+            console.log("Fetching the particular reimbs...");
         }
     }
-    xhr.open("GET", "employee", true);
+    xhr.open("GET", "login", true);//this will fetch the email
     xhr.send();
 }

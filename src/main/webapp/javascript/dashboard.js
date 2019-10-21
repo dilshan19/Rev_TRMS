@@ -5,7 +5,7 @@ window.onload = function() {
 
 function buttonListener(){
     let theParent = document.querySelectorAll("#accept");
-    console.log(theParent);
+    //console.log(theParent);
     for(elem of theParent){
         elem.addEventListener("click", updateReimb, false);
     }
@@ -27,8 +27,8 @@ function updateReimb () {
             console.log("Processing");
         }
     }
-    xhr.open("GET", "add", true);
-    xhr.send("id="+this.name+"accept=true");
+    xhr.open("GET", "add/"+this.name, true);
+    xhr.send();
 }
 
 function displayReimbursementList(reimb) {
