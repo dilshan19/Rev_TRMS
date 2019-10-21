@@ -9,26 +9,40 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="employee.css">
 
 	<title>Employee Dashboard</title>
 </head>
 
 <body>
-	<div>
-		<table class="table table-hover" id="employee-table">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">First</th>
-					<th scope="col">Last</th>
-					<th scope="col">Handle</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
+	<div class="jumbotron jumbotron-fluid" id="placeholder-top">
+		<div class="container">
+			<h1 class="display-4">Employee Dashboard</h1>
+			<p class="lead">Below are all your pending requests</p>
+		</div>
 	</div>
-	<button type="submit" id="employee-submit-request" name="employee-submit-request">Submit a Request</button>
+	<div id="placeholder-left"></div>
+	<div id="emp-dashboard">
+		<form method="POST" action="employee">
+			<table class="table table-hover" id="employee-table">
+				<thead>
+					<tr>
+						<th scope="col">Request Id</th>
+						<th scope="col">Event Type</th>
+						<th scope="col">Event Date</th>
+						<th scope="col">Event Cost</th>
+						<th scope="col">Reimbursement Amount</th>
+						<th scope="col">Grading Format</th>
+						<th scope="col">Status</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			<button type="submit" class="btn btn-primary" id="employee-submit-request"
+				name="employee-submit-request">Submit Request</button>
+		</form>
+	</div>
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

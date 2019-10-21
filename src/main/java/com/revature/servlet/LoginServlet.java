@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 			request.getSession().setAttribute("email", user.getEmail());
 			request.getSession().setAttribute("pass", user.getPassword());
 			if (user.getManagerStatus().equals("employee")) {
-				response.sendRedirect("employee");
+				response.sendRedirect("employee.html");
 			} else if(user.getManagerStatus().equals("supervisor")){
 				response.sendRedirect("manager");
 			} else if(user.getManagerStatus().equals("departmentHead")){

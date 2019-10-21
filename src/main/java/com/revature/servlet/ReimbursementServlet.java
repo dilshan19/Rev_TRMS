@@ -38,7 +38,7 @@ public class ReimbursementServlet extends HttpServlet  {
 		} else {
 			info("grabbing all reimb");
 
-			ArrayList<Reimbursement> reimbList = reimburseServ.getAllReimbursements();
+			ArrayList<Reimbursement> reimbList = reimburseServ.getAllReimbursements(null);
 
 			response.getWriter().write(om.writeValueAsString(reimbList));
 		}
@@ -50,27 +50,35 @@ public class ReimbursementServlet extends HttpServlet  {
 		//todo: figure out how to get the email without the client re inputting
 		Reimbursement reimb = new Reimbursement();
 		PrintWriter pw = resp.getWriter();		
-		reimb.setRequestorEmail("sample.email@gmail.com");
+		reimb.setRequestorEmail(req.getParameter("email"));
 		reimb.setType(req.getParameter("type"));
-		reimb.setLocation(req.getParameter("location"));
+		
+		String addr = req.getParameter("address");
+		String addr2 = req.getParameter("address2");
+		String city = req.getParameter("city");
+		String state = req.getParameter("state");
+		String zip = req.getParameter("zip");
+		String completeAddr = addr +", " + addr2+", " + city +", "+ state+", " + zip;
+		reimb.setLocation(completeAddr);
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String date = req.getParameter("date");
+		String date = req.getParameter("eventdate");
 		debug("raw date: " + date);
 		LocalDate localDate = LocalDate.parse(date, formatter);
-		debug("formatted date: " + localDate);
-		
+		debug("formatted date: " + localDate);		
 		reimb.setDate(localDate);
-		Double amount = Double.parseDouble(req.getParameter("amount"));
+		
+		Double amount = Double.parseDouble(req.getParameter("cost"));
 		reimb.setOriginalAmount(amount);
 		reimb.setTentativeAmount(amount);
 		reimb.setDescription(req.getParameter("description"));
-		reimb.setFormat(req.getParameter("format"));
+		reimb.setFormat(req.getParameter("gradeformat"));
 		if( reimburseServ.addReimbursement(reimb) ) {
 			pw.write("Successfully added your submission!");
 		}else {
 			pw.write("Could not process your form!");
 		}
+		resp.sendRedirect("employee.html");
 
 	}
 

@@ -15,8 +15,8 @@ public class ReimbursementService {
 		return check;
 	}
 	
-	public ArrayList<Reimbursement> getAllReimbursements(){
-		return reimbursementService.getR(null);
+	public ArrayList<Reimbursement> getAllReimbursements(String email){
+		return reimbursementService.getR(email);
 	}
 	
 	public boolean updateReimbTable(int id, int field) {
