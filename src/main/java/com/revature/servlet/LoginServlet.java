@@ -30,14 +30,23 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		User user = userService.loginUser(username, password);
-		if (user != null) {
-			response.getWriter().write("Welcome to your homepage" + user.getFullName());
-		} else {
-			response.getWriter().write("Invalid login credentials");
+		try {
+			request.getRequestDispatcher("login.html").forward(request, response);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+//		String username = request.getParameter("username");
+//		String password = request.getParameter("password");
+//		User user = userService.loginUser(username, password);
+//		if (user != null) {
+//			response.getWriter().write("Welcome to your homepage" + user.getFirstName());
+//		} else {
+//			response.getWriter().write("Invalid login credentials");
+//		}
 	}
 
 	/**
@@ -46,25 +55,30 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		User user = userService.loginUser(username, password);
-		if (user != null) {
-			request.getSession().setAttribute("email", user.getEmail());
-			request.getSession().setAttribute("pass", user.getPassword());
-			if (user.getManagerStatus().equals("employee")) {
-				response.sendRedirect("employee.html");
-			} else if(user.getManagerStatus().equals("supervisor")){
-				response.sendRedirect("manager");
-			} else if(user.getManagerStatus().equals("departmentHead")){
-				response.sendRedirect("departmentHead");
-			} else if(user.getManagerStatus().equals("benco")){
-					response.sendRedirect("benco");
-			} else {
-				System.out.println("Couldn't find where to redirect you.");
-			}
+		String button = request.getParameter("registerbutton");
+		if("".equals(button)) {
+			response.sendRedirect("register");
 		} else {
-			response.getWriter().write("Sorry, but you were not able to login correctly :(");
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			User user = userService.loginUser(username, password);
+			if (user != null) {
+				request.getSession().setAttribute("email", user.getEmail());
+				request.getSession().setAttribute("pass", user.getPassword());
+				if (user.getManagerStatus().equals("employee")) {
+					response.sendRedirect("employee.html");
+				} else if(user.getManagerStatus().equals("supervisor")){
+					response.sendRedirect("manager");
+				} else if(user.getManagerStatus().equals("departmentHead")){
+					response.sendRedirect("departmentHead");
+				} else if(user.getManagerStatus().equals("benco")){
+						response.sendRedirect("benco");
+				} else {
+					System.out.println("Couldn't find where to redirect you.");
+				}
+			} else {
+				response.getWriter().write("Sorry, but you were not able to login correctly :(");
+			}
 		}
 	}
 

@@ -1,6 +1,7 @@
 // Find a <table> element with id="myTable":
-var table = document.getElementById("employee-table");
-var button = document.getElementById("employee-submit-request");
+var table = document.getElementById("employee-table").getElementByTagName('tbody')[0];
+//var button = document.getElementById("employee-submit-request");
+var table = document.getElementById("employee-table").getElementByTagName('tbody')[0];
 /* button.addEventListener("click", addRow) */
 
 function addRow(event){
