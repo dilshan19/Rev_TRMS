@@ -48,6 +48,6 @@ function getMyReimbursements() {
             console.log("Fetching the particular reimbs...");
         }
     }
-    xhr.open("GET", "login", true);//this will fetch the email
+    xhr.open("GET", "add", true);//this will fetch the email
     xhr.send();
 }

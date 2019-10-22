@@ -31,20 +31,30 @@ public class ReimbursementServlet extends HttpServlet  {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		ObjectMapper om = new ObjectMapper();
 
-		String name = request.getPathInfo();
-		debug("(REIMBSERVLET) doGet, ext: " + name);
-
 		HttpSession session = request.getSession(false);
 		String type = (String) session.getAttribute("usertype");
+		String email = (String) session.getAttribute("email");
 		LoggerUtil.debug("(REIMBSERVLET) doGet, usertype: " + type);
-		if (name == null && type == "employee") {
-			response.sendRedirect("employee.html");
-		} else { //grab all reimbs from non-requestor pages
-			debug("(REIMBSERVLET) doGet, extension: " + name);
-			
-			ArrayList<Reimbursement> reimbList = reimburseServ.getAllReimbursements(null);
-
+		ArrayList<Reimbursement> reimbList  = null;
+		switch(type) {
+		case "employee":
+			reimbList = (email == null) ? reimburseServ.getAllReimbursements(null) : reimburseServ.getAllReimbursements(email) ;
 			response.getWriter().write(om.writeValueAsString(reimbList));
+			break;
+		case "supervisor":
+			reimbList = reimburseServ.getAllReimbursements(null) ;
+			response.getWriter().write(om.writeValueAsString(reimbList));
+			break;
+		case "departmentHead":
+			reimbList = reimburseServ.getAllReimbursements(null) ;
+			response.getWriter().write(om.writeValueAsString(reimbList));
+			break;
+		case "benco":
+			reimbList = reimburseServ.getAllReimbursements(null) ;
+			response.getWriter().write(om.writeValueAsString(reimbList));
+			break;
+			default:
+				debug("(REIMBSERVLET) doGet, unknown source of get call");
 		}
 	}
 	
@@ -97,7 +107,7 @@ public class ReimbursementServlet extends HttpServlet  {
 		String id = name.substring(1);
 		info("url: " + id);
 			
-		
+		//service call to delete
 	}
 	
 

@@ -28,26 +28,23 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public LoginServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ObjectMapper om = new ObjectMapper();
-		String name = request.getPathInfo();
-		debug("(LOGINSERVLET) doGet, ext: " + name);
-		HttpSession session = request.getSession(false);
-		String email = (String) session.getAttribute("email");
-		LoggerUtil.debug("(LOGINSERVLET) doGet, email: " + email);
-		if (name == null) { // call after logging into employee
-			response.getWriter().write(om.writeValueAsString(reimburseServ.getAllReimbursements(email)));
-		}
+		/*
+		 * ObjectMapper om = new ObjectMapper(); String name = request.getPathInfo();
+		 * debug("(LOGINSERVLET) doGet, ext: " + name); HttpSession session =
+		 * request.getSession(false); String email = (String)
+		 * session.getAttribute("email");
+		 * LoggerUtil.debug("(LOGINSERVLET) doGet, email: " + email); if (name == null)
+		 * { // call after logging into employee
+		 * response.getWriter().write(om.writeValueAsString(reimburseServ.
+		 * getAllReimbursements(email))); }
+		 */
 
 	}
 
@@ -55,6 +52,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String button = request.getParameter("registerbutton");
@@ -74,7 +72,7 @@ public class LoginServlet extends HttpServlet {
 				if (user.getManagerStatus().equals("employee")) {
 					response.sendRedirect("employee");
 				} else if (user.getManagerStatus().equals("supervisor")) {
-					response.sendRedirect("manager");
+					response.sendRedirect("supervisor");
 				} else if (user.getManagerStatus().equals("departmentHead")) {
 					response.sendRedirect("departmentHead");
 				} else if (user.getManagerStatus().equals("benco")) {

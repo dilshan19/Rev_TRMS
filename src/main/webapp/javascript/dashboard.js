@@ -7,6 +7,7 @@ function buttonListener(){
     let theParent = document.querySelectorAll("#accept");
     //console.log(theParent);
     for(elem of theParent){
+        console.log(elem);
         elem.addEventListener("click", updateReimb, false);
     }
     //theParent.addEventListener("click", updateReimb, false);
@@ -27,7 +28,7 @@ function updateReimb () {
             console.log("Processing");
         }
     }
-    xhr.open("GET", "add/"+this.name, true);
+    xhr.open("PUT", "add/"+this.name, true);
     xhr.send();
 }
 
@@ -77,13 +78,10 @@ function getAllReimbursements() {
             if (xhr.status === 200) {
                 displayReimbursementList(JSON.parse(xhr.responseText));
             } else {
-                document.getElementById("reimbursementList").innerHTML = "Failed to retrieve reimbursement";
+                console.log("Failed to retrieve reimbursement");
             }
         } else {
-            //console.log( xhr.readyState );
-            //  console.log( xhr.responseText );
-
-            document.getElementById("reimbursementList").innerHTML = "Fetching Request...";
+            console.log("Fetching Request...");
         }
     }
     xhr.open("GET", "add", true);
