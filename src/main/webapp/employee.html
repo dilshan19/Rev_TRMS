@@ -17,23 +17,30 @@
 <body>
 	<div class="jumbotron jumbotron-fluid" id="placeholder-top">
 		<div class="container">
-			<h1 class="display-4">Brian's Dashboard</h1>
+			<h1 class="display-4">Employee Dashboard</h1>
 			<p class="lead">Below are all your pending requests</p>
 		</div>
 	</div>
 	<div id="placeholder-left"></div>
 	<div id="emp-dashboard">
 		<form method="POST" action="employee">
-			<table class="table table-hover" id="employee-table">
+			<table class="table table-hover" id="reimbTable">
 				<thead>
 					<tr>
-						<th scope="col">Request Id</th>
-						<th scope="col">Event Type</th>
-						<th scope="col">Event Date</th>
-						<th scope="col">Event Cost</th>
-						<th scope="col">Reimbursement Amount</th>
-						<th scope="col">Grading Format</th>
-						<th scope="col">Status</th>
+						<th scope="col">ID</th>
+						<th scope="col">Email</th>
+						<th scope="col">Location</th>
+						<th scope="col">Date</th>
+						<th scope="col">Type</th>
+						<th scope="col">Description</th>
+						<th scope="col">Grade Format</th>
+						<th scope="col">Initial</th>
+						<th scope="col">Tentative</th>
+						<th scope="col">Grade Upload?</th>
+						<th scope="col">D.S. Approval</th>
+						<th scope="col">D.H. Approval</th>
+						<th scope="col">B.C. Approval</th>
+						<th scope="col">Altered by B.C.?</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -54,7 +61,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
-	<script src="employee.js"></script>
-</body>
+		<script src='javascript/employee.js'></script>
+	</body>
 
 </html>

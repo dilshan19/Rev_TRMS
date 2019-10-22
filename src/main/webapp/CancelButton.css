@@ -1,0 +1,44 @@
+
+#accept{
+ background-color: #13702f;
+}
+#deny{
+  background-color: #690c0c;
+}
+.option-button {
+  display: inline-block;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 15px;
+  width: 120px;
+  transition: all 0.3s;
+  margin: 5px;
+}
+
+.option-button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.3s;
+}
+
+.option-button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.3s;
+}
+
+.option-button:hover span {
+  padding-right: 25%;
+}
+
+.option-button:hover span:after {
+  opacity: 1;
+  right: 0;
+}

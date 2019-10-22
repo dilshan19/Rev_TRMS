@@ -1,78 +1,135 @@
 package com.revature.dao;
 
-import static com.revature.util.LoggerUtil.error;
-import static com.revature.util.LoggerUtil.info;
+import static com.revature.util.LoggerUtil.*;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 
 import com.revature.util.ConnectionFactory;
 import com.revature.util.LoggerUtil;
-import com.revature.pojo.Event;
 import com.revature.pojo.Reimbursement;
-import com.revature.pojo.User;
 
 public class ReimbursementDAOImpl implements ReimbursementDAO {
 	private static Connection conn = ConnectionFactory.getConnection();
-	
-	public Event getEvent(String email, String eventdate, String address, String address2, String city, String state, String zip, String description, double cost, double reimbursementAmount, String type, String gradeFormat) {
-		Event event = new Event();
-		event.setEmail(email);
-		event.setDate(eventdate);
-		event.setAddress(address);
-		event.setAddress2(address2);
-		event.setCity(city);
-		event.setState(state);
-		event.setZip(zip);
-		event.setDescription(description);
-		event.setCost(cost);
-		event.setType(type);
-		event.setGradeFormat(gradeFormat);
-		return event;
+
+	public ArrayList<Reimbursement> getR(String email) {
+		ArrayList<Reimbursement> rList = new ArrayList<Reimbursement>();
+		try {
+			PreparedStatement stmt;
+			if (email == null) {
+				String sql = "select * from reimbursements order by requestid asc";
+				stmt = conn.prepareStatement(sql);
+			} else {
+				String sql = "select * from reimbursements where email = ? order by requestid asc";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, email);
+				LoggerUtil.debug(stmt.toString());
+			}
+			ResultSet r = stmt.executeQuery();
+			Reimbursement tempR;
+			while (r.next() != false) {
+				int count = 1;
+				tempR = new Reimbursement();
+				tempR.setId(r.getInt(count++));
+				tempR.setRequestorEmail(r.getString(count++));
+				Date temp = r.getDate(count++);
+				tempR.setDate(temp.toLocalDate());// --> buggy line somehow. wont print stacktrace on my STS so Im not
+													// sure what is causing err
+				tempR.setLocation(r.getString(count++));
+				tempR.setOriginalAmount(r.getDouble(count++));
+				tempR.setTentativeAmount(r.getDouble(count++));
+				tempR.setType(r.getString(count++));
+				tempR.setDescription(r.getString(count++));
+				tempR.setFormat(r.getString(count++));
+				tempR.setDSApproved(r.getBoolean(count++));
+				tempR.setDHApproved(r.getBoolean(count++));
+				tempR.setBCApproved(r.getBoolean(count++));
+				tempR.setBCAltered(r.getBoolean(count++));
+				tempR.setGradeUploaded(r.getBoolean(count++));
+				//info(tempR.toString());
+				rList.add(tempR);
+			}
+			r.close();
+		} catch (SQLException e) {
+			error(e);
+			e.printStackTrace();
+		}
+		return (rList.size() != 0) ? rList : null;
 	}
 
-	public boolean insert(Event event) {
+	public boolean insert(Reimbursement re) {
 		int result = 0;
-		info(event.toString());
+		debug(re.toString());
 
 		try {
-			String sql = "insert into requests(requestoremail,eventdate,address,address2,city,state,zip,eventdescription,eventcost,reimbursementamount,eventtype,gradingformat,supervisorapproval,dhapproval,bencoapproval,modifiedbybenco,gradeorpresentationstatus) " + 
-			"values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, false, false, false, false, false);"; 
-			if(conn == null) {
-				LoggerUtil.debug("Conn null");
+			String sql = "insert into reimbursements(email,date_,location_,originalamount,tentativeamount,eventtype,description,format,isDS,isDH,isBC,isBCAltered,hasGrade) "
+					+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?);";
+			if (conn == null) {
+				LoggerUtil.error("Conn null");
 			}
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			int count = 1;
-			stmt.setString(count++, event.getEmail());
-			stmt.setObject(count++, event.getDate(), Types.DATE);
-			stmt.setString(count++, event.getAddress());
-			stmt.setString(count++, event.getAddress2());
-			stmt.setString(count++, event.getCity());
-			stmt.setString(count++, event.getState());
-			stmt.setString(count++, event.getZip());
-			stmt.setString(count++, event.getDescription());
-			stmt.setDouble(count++, event.getCost());
-			stmt.setDouble(count++, event.getReimbursementAmount());
-			stmt.setString(count++, event.getType());
-			stmt.setString(count++, event.getGradeFormat());
-			result = stmt.executeUpdate();	//should be 1 row updated
-			info(String.valueOf(count));
+			stmt.setString(count++, re.getRequestorEmail());
+			stmt.setObject(count++, re.getDate(), Types.DATE);
+			stmt.setString(count++, re.getLocation());
+			stmt.setDouble(count++, re.getOriginalAmount());
+			stmt.setDouble(count++, re.getTentativeAmount());
+			stmt.setString(count++, re.getType());
+			stmt.setString(count++, re.getDescription());
+			stmt.setString(count++, re.getFormat());
+			stmt.setBoolean(count++, re.isDSApproved());
+			stmt.setBoolean(count++, re.isDHApproved());
+			stmt.setBoolean(count++, re.isBCApproved());
+			stmt.setBoolean(count++, re.isBCAltered());
+			stmt.setBoolean(count++, re.getGradeUploaded());
+			result = stmt.executeUpdate(); // should be 1 row updated
+
 		} catch (SQLException e) {
-			//int errorCode = Integer.parseInt(e.getSQLState());
-			//debug("State: " + errorCode);
 			error(e);
 			e.printStackTrace();
-			return false;
 
 		}
-		return true;
+		return result != 0;
 	}
-	
-	
-	
-	
+
+	@Override
+	public boolean update(int id, int field) {
+		int result = 0;
+		try {
+			String sql = null;
+			switch(field) {
+			case 0:
+				sql = "update reimbursements set isDSAltered = true where isDS = ?";
+				break;
+			case 1:
+				sql = "update reimbursements set isDHAltered = true where isDH = ?";
+				break;
+			case 2:
+				sql = "update reimbursements set isBCAltered = true where isBC = ?";
+				break;
+			case 3:
+				sql = "update reimbursements set isBCaltered = true where isBCaltered = ?";
+				break;
+				default:
+					error("Select a correct field option");
+					return false;
+			}
+			if (conn == null) {
+				LoggerUtil.error("Conn null");
+			}
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			result = stmt.executeUpdate(); // should be 1 row updated
+		} catch (SQLException e) {
+			error(e);
+			e.printStackTrace();
+		}
+		return result == 1;
+	}
 
 }

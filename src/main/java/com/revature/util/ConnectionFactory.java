@@ -24,11 +24,9 @@ public class ConnectionFactory {
         }
     }
 
-	//private static final String PROPERTIES_FILE = "src/main/resources/database.properties";
-	//private static final String PROPERTIES_FILE = "database.properties";
 	//private static final String PROPERTIES_FILE = "D:/Users/Dilshan/Desktop/code/STS/Project1/src/main/resources/database.properties";
 	private static final String PROPERTIES_FILE = "C:\\P1\\Rev_TRMS\\Rev_TRMS\\src\\main\\webapp\\WEB-INF\\database.properties";
-	
+
 	private static ConnectionFactory cf;
 
 	public static Connection getConnection() {

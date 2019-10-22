@@ -59,7 +59,7 @@ public class UserDaoLogin implements UserDao {
 		}
 		return user;
 	}
-	
+
 	public User registerDao(User user) {
 		String sql = "insert into " + user.getRole() + " (firstname, lastname, email, password) values (?, ?, ?, ?)";
 

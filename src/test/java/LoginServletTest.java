@@ -9,7 +9,6 @@ import org.junit.Test;
 import com.revature.pojo.User;
 import com.revature.service.UserService;
 import com.revature.service.UserServiceImpl;
-import com.revature.servlet.LoginServlet;
 
 public class LoginServletTest {
 	
@@ -33,7 +32,6 @@ public class LoginServletTest {
 
 	@Test
 	public void test() {
-		LoginServlet ls = new LoginServlet();
 		User user = userService.loginUser("cuser@gmail.com", "cpass");
 	}
 

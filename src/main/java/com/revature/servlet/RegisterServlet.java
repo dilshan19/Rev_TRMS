@@ -62,7 +62,16 @@ public class RegisterServlet extends HttpServlet {
 		String role = request.getParameter("role");
 		User user = userService.registerUser(firstName, lastName, username, password, role);
 		if (user != null) {
-			response.sendRedirect("login");
+			//response.sendRedirect("login");
+			try {
+				request.getRequestDispatcher("login.html").forward(request, response);
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 			response.getWriter().write("Sorry, but you were not able to register correctly :(");
 		}

@@ -15,7 +15,6 @@ public class UserServiceImpl implements UserService {
 		
 		userDao.loginUser(user);
 		
-		
 		if ((user != null) && (user.getPassword().equals(password))) {
 			return user;
 		}
