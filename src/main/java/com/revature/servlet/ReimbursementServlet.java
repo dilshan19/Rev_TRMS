@@ -14,10 +14,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.pojo.Reimbursement;
 import com.revature.service.ReimbursementService;
+import com.revature.util.LoggerUtil;
 
 import static com.revature.util.LoggerUtil.*;
 
@@ -32,10 +34,13 @@ public class ReimbursementServlet extends HttpServlet  {
 		String name = request.getPathInfo();
 		debug("(REIMBSERVLET) doGet, ext: " + name);
 
-		if (name == null) {
+		HttpSession session = request.getSession(false);
+		String type = (String) session.getAttribute("usertype");
+		LoggerUtil.debug("(REIMBSERVLET) doGet, usertype: " + type);
+		if (name == null && type == "employee") {
 			response.sendRedirect("employee.html");
 		} else { //grab all reimbs from non-requestor pages
-			debug("grabbing all reimb, extension: " + name);
+			debug("(REIMBSERVLET) doGet, extension: " + name);
 			
 			ArrayList<Reimbursement> reimbList = reimburseServ.getAllReimbursements(null);
 
@@ -46,14 +51,19 @@ public class ReimbursementServlet extends HttpServlet  {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String name = req.getPathInfo();
-		debug("(REIMBSERVLET) doGet, ext: " + name);		//todo: figure out how to get the email without the client re inputting
+		debug("(REIMBSERVLET) doPost, ext: " + name);		//todo: figure out how to get the email without the client re inputting
 		Reimbursement reimb = new Reimbursement();
 		PrintWriter pw = resp.getWriter();		
-		reimb.setRequestorEmail(req.getParameter("email"));
+		
+		HttpSession session = req.getSession(false);
+		String email = (String) session.getAttribute("email");
+		LoggerUtil.debug("(REIMBSERVLET) doPost, email: " + email);
+		
+		reimb.setRequestorEmail(email);
 		reimb.setType(req.getParameter("type"));
 		
 		String addr = req.getParameter("address");
-		String addr2 = req.getParameter("address2");
+		String addr2 = (  req.getParameter("address2") != null ) ?  req.getParameter("address2") : "";
 		String city = req.getParameter("city");
 		String state = req.getParameter("state");
 		String zip = req.getParameter("zip");
