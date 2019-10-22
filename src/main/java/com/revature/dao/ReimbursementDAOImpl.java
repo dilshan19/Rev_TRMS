@@ -28,6 +28,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				String sql = "select * from reimbursements where email = ? order by requestid asc";
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, email);
+
 				//LoggerUtil.debug(stmt.toString());
 			}
 			ResultSet r = stmt.executeQuery();
@@ -51,7 +52,8 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				tempR.setBCApproved(r.getBoolean(count++));
 				tempR.setBCAltered(r.getBoolean(count++));
 				tempR.setGradeUploaded(r.getBoolean(count++));
-				info(tempR.toString());
+				//info(tempR.toString());
+
 				rList.add(tempR);
 			}
 			r.close();

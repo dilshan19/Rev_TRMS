@@ -39,15 +39,14 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
 		ObjectMapper om = new ObjectMapper();
 		String name = request.getPathInfo();
 		debug("(LOGINSERVLET) doGet, ext: " + name);
 		HttpSession session = request.getSession(false);
 		String email = (String) session.getAttribute("email");
 		LoggerUtil.debug("(LOGINSERVLET) doGet, email: " + email);
-		if (name == null ) {	//call after logging into employee
-			response.getWriter().write(om.writeValueAsString( reimburseServ.getAllReimbursements(email) ) );
+		if (name == null) { // call after logging into employee
+			response.getWriter().write(om.writeValueAsString(reimburseServ.getAllReimbursements(email)));
 		}
 
 	}
@@ -58,29 +57,32 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String name = request.getPathInfo();
-		debug("(LOGINSERVLET) doPost, ext: " + name);
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		User user = userService.loginUser(username, password);
-		if (user != null) {
-			request.getSession().setAttribute("email", user.getEmail());
-			request.getSession().setAttribute("pass", user.getPassword());
-			request.getSession().setAttribute("usertype", user.getManagerStatus());
-			if (user.getManagerStatus().equals("employee")) {
-				response.sendRedirect("employee");
-			} else if(user.getManagerStatus().equals("supervisor")){
-				response.sendRedirect("manager");
-			} else if(user.getManagerStatus().equals("departmentHead")){
-				response.sendRedirect("departmentHead");
-			} else if(user.getManagerStatus().equals("benco")){
-					response.sendRedirect("benco");
-			} else {
-				info("Couldn't find where to redirect you.");
-			}
+		String button = request.getParameter("registerbutton");
+		if ("".equals(button)) {
+			response.sendRedirect("register");
 		} else {
-			response.getWriter().write("Sorry, but you were not able to login correctly :(");
+
+			String name = request.getPathInfo();
+			debug("(LOGINSERVLET) doPost, ext: " + name);
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			User user = userService.loginUser(username, password);
+			if (user != null) {
+				request.getSession().setAttribute("email", user.getEmail());
+				request.getSession().setAttribute("pass", user.getPassword());
+				request.getSession().setAttribute("usertype", user.getManagerStatus());
+				if (user.getManagerStatus().equals("employee")) {
+					response.sendRedirect("employee");
+				} else if (user.getManagerStatus().equals("supervisor")) {
+					response.sendRedirect("manager");
+				} else if (user.getManagerStatus().equals("departmentHead")) {
+					response.sendRedirect("departmentHead");
+				} else if (user.getManagerStatus().equals("benco")) {
+					response.sendRedirect("benco");
+				} else {
+					info("Couldn't find where to redirect you.");
+				}
+			}
 		}
 	}
-
 }
