@@ -49,5 +49,14 @@ public class ReimbursementService {
 		reimbursementService.insertDeniedR( id,  email,  reason);
 	}
 	
+	public void alterAmount(int id, double amount) {
+		if(amount > 1000.00) {
+			LoggerUtil.debug("Amount greater than the yearly $1000 reimbursement limit");
+			return;
+		}
+		reimbursementService.updateAmount(id, amount);
+		
+	}
+	
 	
 }

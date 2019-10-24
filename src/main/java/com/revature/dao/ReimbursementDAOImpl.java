@@ -165,12 +165,12 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 	}
 
 	@Override
-	public boolean updateAmount(int id, double field) {
+	public boolean updateAmount(int id, double amount) {
 		int result = 0;
 		try {
 			String sql = "update reimbursements set tentativeamount = ? where requestid = ?;";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setDouble(1, id);
+			stmt.setDouble(1, amount);
 			stmt.setInt(1, id);
 			result = stmt.executeUpdate(); // should be 1 row updated
 		} catch (SQLException e) {

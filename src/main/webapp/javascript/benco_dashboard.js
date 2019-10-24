@@ -9,9 +9,9 @@ function buttonListener(){
     for(elem of acceptButs){
         elem.addEventListener("click", updateReimb, false);
     }
-    for(elem of denyButs){
-        elem.addEventListener("click", sendToReason, false);
-    }
+    // for(elem of denyButs){
+    //     elem.addEventListener("click", sendToReason, false);
+    // }
 }
 
 function sendToReason(){
@@ -74,7 +74,7 @@ function displayReimbursementList(reimb) {
                     let cell2 = row.insertCell(count++); 
                     cell2.innerHTML = "<tr><td><div><div><button class=\"option-button\" name=\"accept\" id=\""+val+"\">"+
                     "<span>Accept</span></button></div><form method=\"POST\" action=\"supervisor\">"+
-                    "<input type=\"submit\" class=\"option-button\" name=\"id\" value=\"Deny "+val+"\">"+
+                    "<input type=\"submit\" class=\"option-button\" name=\"id\" value=\"Alter "+val+"\">"+
                     "</input></form></div></td></tr>";
 
                     let cell = row.insertCell(count);
@@ -96,7 +96,7 @@ function displayReimbursementList(reimb) {
             }
           }
     }
-    //buttonListener();
+    buttonListener();
 }
 
 function getAllReimbursements() {

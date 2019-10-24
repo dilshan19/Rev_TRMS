@@ -120,4 +120,13 @@
 		<url-pattern>/reject/*</url-pattern>
 	</servlet-mapping>
 	
+		<servlet>
+		<servlet-name>Alter</servlet-name>
+		<servlet-class>com.revature.servlet.AlterAmountServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Alter</servlet-name>
+		<url-pattern>/alter/*</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

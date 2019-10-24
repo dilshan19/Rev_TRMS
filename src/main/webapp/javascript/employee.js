@@ -19,7 +19,7 @@ function displayReimbursementList(rList) {
                     let m = val.monthValue + 1; // Month is 0-indexed
                     let y = val.year;
                     cell.innerHTML = m+"-"+d+"-"+y;
-                }else if(count == 7){
+                }else if(count == 7 || count == 8){
                     cell.innerHTML = "$" + val;
                 }else if(count > 8){
                     cell.innerHTML = (val === true) ? "Yes" : "No";

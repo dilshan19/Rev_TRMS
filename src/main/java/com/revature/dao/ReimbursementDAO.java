@@ -13,7 +13,7 @@ public interface ReimbursementDAO {
 	public boolean updateToAccept(int id, int field);
 	
 	//update only amount
-	public boolean updateAmount(int id, double field);
+	public boolean updateAmount(int id, double amount);
 
 	//Remove row reimbursement table based on id
 	
