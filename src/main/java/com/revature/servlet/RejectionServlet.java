@@ -36,7 +36,8 @@ public class RejectionServlet extends HttpServlet  {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		try {			
+		try {	
+			debug("(RejectionServlet) doPost");
 			HttpSession session = req.getSession(false);
 			String type = (String) session.getAttribute("usertype");
 			String reason = req.getParameter("reason");

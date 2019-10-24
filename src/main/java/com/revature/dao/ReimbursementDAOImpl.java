@@ -147,7 +147,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 	public boolean insertDeniedR(int id, String email, String reason) {
 		int result = 0;
 		try {
-			String sql = "insert into rejected(id,email,reason values(?, ?, ?);";
+			String sql = "insert into rejected(id,email,reason) values(?, ?, ?);";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			int count = 1;

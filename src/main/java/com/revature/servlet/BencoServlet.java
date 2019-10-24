@@ -1,6 +1,8 @@
 package com.revature.servlet;
 
 import static com.revature.util.LoggerUtil.debug;
+import static com.revature.util.LoggerUtil.error;
+import static com.revature.util.LoggerUtil.info;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,27 +27,27 @@ public class BencoServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			ObjectMapper om = new ObjectMapper();
-			String name = request.getPathInfo();
+			String name = req.getPathInfo();
 			debug("(SUPERVISOR) doGet, ext: " + name);
 			ArrayList<Reimbursement> reimbList = null;
-			HttpSession session = request.getSession(false);
+			HttpSession session = req.getSession(false);
 			String type = (String) session.getAttribute("usertype");
 			String email = (String) session.getAttribute("email");
-			debug("(SUPERVISOR) doGet, employee email: " + email + " Empl type: " + type);
-			if(type != "bc") {
+			debug("(BENCO) doGet, employee email: " + email + " Empl type: " + type);
+			if (type != "bc") {
 				debug("Not an benco! Go away!");
-			}else {
+			} else {
 				reimbList = reimburseServ.getAllReimbursements(null);
-				response.sendRedirect("DSDashboard.html");	
+				resp.sendRedirect("BCDashboard.html");
 			}
 		} catch (Exception e) {
 			debug("Supervisor exception, doGet");
 			e.printStackTrace();
 		}
+		
 	}
 
 	/**

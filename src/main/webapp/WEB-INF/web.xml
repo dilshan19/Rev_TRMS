@@ -108,7 +108,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>bencoHome</servlet-name>
-		<url-pattern>/benco</url-pattern>
+		<url-pattern>/benco/*</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

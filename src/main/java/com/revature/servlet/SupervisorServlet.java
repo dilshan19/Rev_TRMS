@@ -53,29 +53,23 @@ public class SupervisorServlet extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		/*
-		 * HttpSession session = req.getSession(false); String email = (String)
-		 * session.getAttribute("email"); String type = (String)
-		 * session.getAttribute("usertype"); String id = req.getParameter("id");
-		 * debug("id: " + id); if(type!="ds") { debug("Not a supervisor!"); return; }
-		 * resp.sendRedirect("denyreason.html");
-		 */
 		try {
+
 			HttpSession session = req.getSession(false);
+
 			String type = (String) session.getAttribute("usertype");
+
 			if (type != "ds") {
 				debug("Non-supervisor performed GET to rejection servlet");
 				return;
 			}
-			debug("id: ");
-			String id = req.getParameter("id");
+			int id = Integer.parseInt(req.getParameter("id").substring(5) );
+
+			//int id = Integer.parseInt( req.getParameter("id") );
 			debug("... " + id);
 			session.setAttribute("denyId", id);
 			info("(SupervisorServlet) doGet, " + id);
 			resp.sendRedirect("reject");
-			debug("after redir");
-
 		} catch (Exception e) {
 			error("(supervisor doPost) error");
 			error(e);
