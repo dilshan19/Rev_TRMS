@@ -100,31 +100,77 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 	}
 
 	@Override
-	public boolean update(int id, int field) {
+	public boolean updateToAccept(int id, int field) {
 		int result = 0;
 		try {
 			String sql = null;
 			switch(field) {
 			case 0:
-				sql = "update reimbursements set isDSAltered = true where isDS = ?";
+				sql = "update reimbursements set isDS = true where requestid = ?";
 				break;
 			case 1:
-				sql = "update reimbursements set isDHAltered = true where isDH = ?";
+				sql = "update reimbursements set isDH = true where requestid = ?";
 				break;
 			case 2:
-				sql = "update reimbursements set isBCAltered = true where isBC = ?";
+				sql = "update reimbursements set isBC = true where requestid = ?";
 				break;
 			case 3:
-				sql = "update reimbursements set isBCaltered = true where isBCaltered = ?";
+				sql = "update reimbursements set isDS = true where requestid = ?;";
+				sql = "update reimbursements set isDH = true where requestid = ?;";
+				break;
+			case 4:	//both DH and DS
+				sql = "update reimbursements set isBCAltered = true where requestid = ?";
 				break;
 				default:
 					error("Select a correct field option");
 					return false;
 			}
-			if (conn == null) {
-				LoggerUtil.error("Conn null");
-			}
 			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			result = stmt.executeUpdate(); // should be 1 row updated
+		} catch (SQLException e) {
+			error(e);
+			e.printStackTrace();
+		}
+		return result != 0;
+	}
+
+	@Override
+	public String grabReason(int requestID) {
+		
+		
+		
+		return null;
+	}
+
+	@Override
+	public boolean insertDeniedR(int id, String email, String reason) {
+		int result = 0;
+		try {
+			String sql = "insert into rejected(id,email,reason values(?, ?, ?);";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			int count = 1;
+			stmt.setInt(count++, id);
+			stmt.setString(count++, email);
+			stmt.setString(count++, reason);
+			result = stmt.executeUpdate(); // should be 1 row updated
+
+		} catch (SQLException e) {
+			error(e);
+			e.printStackTrace();
+
+		}
+		return result == 1;
+	}
+
+	@Override
+	public boolean updateAmount(int id, double field) {
+		int result = 0;
+		try {
+			String sql = "update reimbursements set tentativeamount = ? where requestid = ?;";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setDouble(1, id);
 			stmt.setInt(1, id);
 			result = stmt.executeUpdate(); // should be 1 row updated
 		} catch (SQLException e) {

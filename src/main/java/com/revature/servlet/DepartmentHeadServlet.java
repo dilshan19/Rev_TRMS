@@ -1,29 +1,48 @@
 package com.revature.servlet;
 
+import static com.revature.util.LoggerUtil.debug;
+
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.pojo.Reimbursement;
+import com.revature.service.ReimbursementService;
 
 /**
  * Servlet implementation class EmployeeServlet
  */
 public class DepartmentHeadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DepartmentHeadServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	private ReimbursementService reimburseServ = new ReimbursementService();
+	
+    @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	try {
+			ObjectMapper om = new ObjectMapper();
+			String name = request.getPathInfo();
+			debug("(SUPERVISOR) doGet, ext: " + name);
+			ArrayList<Reimbursement> reimbList = null;
+			HttpSession session = request.getSession(false);
+			String type = (String) session.getAttribute("usertype");
+			String email = (String) session.getAttribute("email");
+			debug("(SUPERVISOR) doGet, employee email: " + email + " Empl type: " + type);
+			if(type != "dh") {
+				debug("Not an supervisor! Go away!");
+			}else {
+				reimbList = reimburseServ.getAllReimbursements(null);
+				response.sendRedirect("DSDashboard.html");	
+			}
+		} catch (Exception e) {
+			debug("Supervisor exception, doGet");
+			e.printStackTrace();
+		}
 	}
 
 	/**

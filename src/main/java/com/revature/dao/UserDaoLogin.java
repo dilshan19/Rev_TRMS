@@ -45,17 +45,24 @@ public class UserDaoLogin implements UserDao {
 	}
 	
 	public User loginUser(User user) {
-		if(bencoLoginDao(user) != null) {
-			user.setManagerStatus("benco");
-		} else if(departmentHeadLoginDao(user) != null) {
-			user.setManagerStatus("departmentHead");
-		} else if(supervisorLoginDao(user) != null) {
-			user.setManagerStatus("supervisor");
-		} else if(employeeLoginDao(user) != null) {
-			user.setManagerStatus("employee");
-		}else {
-			
-			return null;
+		boolean check1 = bencoLoginDao(user) != null;
+		boolean check2 = employeeLoginDao(user) != null;
+		boolean check3 = supervisorLoginDao(user) != null;
+		boolean check4 = departmentHeadLoginDao(user) != null;
+
+		if(check1) {
+			user.setManagerStatus("bc");
+			return user;
+		}else if(check2) {
+			user.setManagerStatus("emp");
+		}else if(check3) {
+			if(check4) {
+				user.setManagerStatus("dsdh");
+			}else {
+				user.setManagerStatus("ds");
+			}
+		}else if(check4) {
+			user.setManagerStatus("dh");
 		}
 		return user;
 	}

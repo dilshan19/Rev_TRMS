@@ -1,5 +1,9 @@
 package com.revature.service;
 
+import com.revature.util.LoggerUtil;
+
+import static com.revature.util.LoggerUtil.error;
+
 import java.util.ArrayList;
 
 import com.revature.dao.ReimbursementDAO;
@@ -19,8 +23,31 @@ public class ReimbursementService {
 		return reimbursementService.getR(email);
 	}
 	
-	public boolean updateReimbTable(int id, int field) {
-		return(reimbursementService.update( id,  field));
+	public void acceptReimbursement(int id, String email, String usertype) {
+		switch(usertype) {
+		case "ds":
+			reimbursementService.updateToAccept(id, 0);
+			break;
+		case "dh":
+			reimbursementService.updateToAccept(id, 1);
+			break;
+		case "bc":
+			reimbursementService.updateToAccept(id, 2);
+			break;
+		case "dsdh":
+			reimbursementService.updateToAccept(id, 4);
+			break;
+			default:
+				LoggerUtil.error("Unrecognized user type!");
+		}
 	}
+	public void insertReason(int id, String email, String reason) {
+		if(reason.length() > 1000) {
+			error("Input reason larger than 1000 chars");
+			return;
+		}
+		reimbursementService.insertDeniedR( id,  email,  reason);
+	}
+	
 	
 }

@@ -36,17 +36,14 @@ public class EmployeeServlet extends HttpServlet {
 //		response.getWriter().write(message + " " + role + " " + name);		
 		try {
 			ObjectMapper om = new ObjectMapper();
-			String name = request.getPathInfo();
-			debug("(EMPSERVLET) doGet, ext: " + name);
-			ArrayList<Reimbursement> reimbList = null;
+
 			HttpSession session = request.getSession(false);
 			String type = (String) session.getAttribute("usertype");
 			String email = (String) session.getAttribute("email");
 			debug("(EMPSERVLET) doGet, employee email: " + email + " Empl type: " + type);
-			if(type != "employee") {
+			if(type != "emp") {
 				debug("Not an employee! Go away!");
 			}else {
-				reimbList = reimburseServ.getAllReimbursements(email);
 				response.sendRedirect("employee.html");	
 			}
 		} catch (Exception e) {
@@ -67,8 +64,6 @@ public class EmployeeServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String name = request.getPathInfo();
-		debug("(EMPSERVLET) doPost, ext: " + name);
 		try {
 			HttpSession session = request.getSession(false);
 			String email = (String) session.getAttribute("email");

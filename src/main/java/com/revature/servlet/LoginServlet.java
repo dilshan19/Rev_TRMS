@@ -69,15 +69,17 @@ public class LoginServlet extends HttpServlet {
 				request.getSession().setAttribute("email", user.getEmail());
 				request.getSession().setAttribute("pass", user.getPassword());
 				request.getSession().setAttribute("usertype", user.getManagerStatus());
-				if (user.getManagerStatus().equals("employee")) {
+				if (user.getManagerStatus().equals("emp")) {
 					response.sendRedirect("employee");
-				} else if (user.getManagerStatus().equals("supervisor")) {
+				} else if (user.getManagerStatus().equals("ds")) {
 					response.sendRedirect("supervisor");
-				} else if (user.getManagerStatus().equals("departmentHead")) {
+				} else if (user.getManagerStatus().equals("dh")) {
 					response.sendRedirect("departmentHead");
-				} else if (user.getManagerStatus().equals("benco")) {
+				} else if (user.getManagerStatus().equals("bc")) {
 					response.sendRedirect("benco");
-				} else {
+				}else if(user.getManagerStatus().equals("dsdh")) {
+					response.sendRedirect("supervisor");
+				}else {
 					info("Couldn't find where to redirect you.");
 				}
 			}

@@ -71,7 +71,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>supHome</servlet-name>
-		<url-pattern>/supervisor</url-pattern>
+		<url-pattern>/supervisor/*</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -109,6 +109,15 @@
 	<servlet-mapping>
 		<servlet-name>bencoHome</servlet-name>
 		<url-pattern>/benco</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Rejection</servlet-name>
+		<servlet-class>com.revature.servlet.RejectionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Rejection</servlet-name>
+		<url-pattern>/reject/*</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

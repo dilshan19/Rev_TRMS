@@ -1,6 +1,8 @@
 package com.revature.servlet;
 
 import static com.revature.util.LoggerUtil.debug;
+import static com.revature.util.LoggerUtil.error;
+import static com.revature.util.LoggerUtil.info;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,8 +24,9 @@ public class SupervisorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ReimbursementService reimburseServ = new ReimbursementService();
 
-    @Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			ObjectMapper om = new ObjectMapper();
 			String name = request.getPathInfo();
@@ -33,39 +36,66 @@ public class SupervisorServlet extends HttpServlet {
 			String type = (String) session.getAttribute("usertype");
 			String email = (String) session.getAttribute("email");
 			debug("(SUPERVISOR) doGet, employee email: " + email + " Empl type: " + type);
-			if(type != "supervisor") {
-				debug("Not an employee! Go away!");
-			}else {
-				reimbList = reimburseServ.getAllReimbursements(email);
-				response.sendRedirect("DSDashboard.html");	
+			if (type != "ds") {
+				debug("Not an supervisor! Go away!");
+			} else {
+				reimbList = reimburseServ.getAllReimbursements(null);
+				response.sendRedirect("DSDashboard.html");
 			}
 		} catch (Exception e) {
 			debug("Supervisor exception, doGet");
 			e.printStackTrace();
 		}
-		
-		
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		/*
+		 * HttpSession session = req.getSession(false); String email = (String)
+		 * session.getAttribute("email"); String type = (String)
+		 * session.getAttribute("usertype"); String id = req.getParameter("id");
+		 * debug("id: " + id); if(type!="ds") { debug("Not a supervisor!"); return; }
+		 * resp.sendRedirect("denyreason.html");
+		 */
+		try {
+			HttpSession session = req.getSession(false);
+			String type = (String) session.getAttribute("usertype");
+			if (type != "ds") {
+				debug("Non-supervisor performed GET to rejection servlet");
+				return;
+			}
+			debug("id: ");
+			String id = req.getParameter("id");
+			debug("... " + id);
+			session.setAttribute("denyId", id);
+			info("(SupervisorServlet) doGet, " + id);
+			resp.sendRedirect("reject");
+			debug("after redir");
+
+		} catch (Exception e) {
+			error("(supervisor doPost) error");
+			error(e);
+		}
+
 	}
 
 	/**
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
 	}
 
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 

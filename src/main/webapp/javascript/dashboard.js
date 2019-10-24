@@ -4,23 +4,25 @@ window.onload = function() {
 }
 
 function buttonListener(){
-    let theParent = document.querySelectorAll("#accept");
-    //console.log(theParent);
-    for(elem of theParent){
-        console.log(elem);
+    let acceptButs = document.querySelectorAll("[name=accept]");
+    let denyButs = document.querySelectorAll("[name=deny]");
+    for(elem of acceptButs){
         elem.addEventListener("click", updateReimb, false);
     }
-    //theParent.addEventListener("click", updateReimb, false);
-    //this.document.getElementById("accept").addEventListener("click", updateReimb, false); 
+    for(elem of denyButs){
+        elem.addEventListener("click", sendToReason, false);
+    }
 }
 
-function updateReimb () {
-    console.log( "RequestID: " + this.name);
+function sendToReason(){
+    console.log( "Deny RequestID: " + this.id);
     let xhr = new XMLHttpRequest();
+    console.log(this);
+    let but = this;
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                getAllReimbursements();
+                but.disabled=true;
             } else {
                 console.log("Update unsuccessful");
             }
@@ -28,7 +30,31 @@ function updateReimb () {
             console.log("Processing");
         }
     }
-    xhr.open("PUT", "add/"+this.name, true);
+    xhr.open("POST", "supervisor?id="+this.id , true);
+    xhr.send();
+
+    // xhr.open("POST", "reject" , true);
+    // xhr.send("id="+this.id);
+}
+
+function updateReimb () {
+    console.log( "accept RequestID: " + this.id);
+    let xhr = new XMLHttpRequest();
+    console.log(this);
+    let but = this;
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                but.disabled=true;
+            } else {
+                console.log("Update unsuccessful");
+            }
+        } else {
+            console.log("Processing");
+        }
+    }
+    let string = "add?accept=1&id="+this.id;
+    xhr.open("PUT", string , true);
     xhr.send();
 }
 
@@ -37,7 +63,7 @@ function displayReimbursementList(reimb) {
     let count;
     for(let i = 0; i < reimb.length; i++) {
         let row = tableBody.insertRow(-1);
-        row.setAttribute("name",i);
+        //row.setAttribute("name",i);
         //row.innerHTML = "id=\"i\"";
         count = 0;
         for (let property in reimb[i]) {
@@ -46,9 +72,9 @@ function displayReimbursementList(reimb) {
                 let cell = row.insertCell(count); 
                 if(count == 0){
                     let cell2 = row.insertCell(count++); 
-                    cell2.innerHTML = "<tr><td><div><button class=\"option-button\" id=\"accept\" name=\""+val+"\">"+
-                    "<span>Accept</span></button></div><div><button class=\"option-button\" id=\"deny\">"+
-                    "<span>Deny</span></button></div></td></tr>";
+                    cell2.innerHTML = "<tr><td><div><div><button class=\"option-button\" name=\"accept\" id=\""+val+"\">"+
+                    "<span>Accept</span></button></div><div><button class=\"option-button\" name=\"deny\" id=\""+val+"\">"+
+                    "<span>Deny</span></button></div></div></td></tr>";
                     let cell = row.insertCell(count);
                     cell.innerHTML = val;     
                     //row.setAttribute("id",val);
