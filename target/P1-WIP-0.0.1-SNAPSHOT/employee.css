@@ -1,0 +1,19 @@
+#placeholder-top{
+
+}
+#placeholder-left{
+    width: 10%;
+    display: inline-block;
+}
+#emp-dashboard{
+    display: inline-block;
+    width: 80%;
+}
+
+#sign-out-form{
+    float: right;
+}
+
+a:hover {
+    cursor:pointer;
+  }

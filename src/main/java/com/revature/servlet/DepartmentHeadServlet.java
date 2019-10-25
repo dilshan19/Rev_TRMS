@@ -1,51 +1,53 @@
 package com.revature.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class EmployeeServlet
- */
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.pojo.Reimbursement;
+import com.revature.service.ReimbursementService;
+import static com.revature.util.LoggerUtil.*;
+
 public class DepartmentHeadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DepartmentHeadServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	private static ReimbursementService reimburseServ = new ReimbursementService();
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		try {
+			ObjectMapper om = new ObjectMapper();
+			debug("(DH) doGet)");
+			ArrayList<Reimbursement> reimbList = null;
+			HttpSession session = req.getSession(false);
+			String type = (String) session.getAttribute("usertype");
+			String email = (String) session.getAttribute("email");
+			debug("(DH) doGet, employee email: " + email + " Empl type: " + type);
+			if (type != "dh") {
+				debug("Not an DH! Go away!");
+			} else {
+				reimbList = reimburseServ.getAllReimbursements(null);
+				resp.sendRedirect("DHDashboard.html");
+			}
+		} catch (Exception e) {
+			debug("Supervisor exception, doGet");
+			e.printStackTrace();
+		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+
 	}
 
-	/**
-	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-	/**
-	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }
