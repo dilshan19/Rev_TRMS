@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import org.apache.log4j.Logger;
+
 import com.revature.pojo.User;
 import com.revature.util.ConnectionFactory;
+import com.revature.util.LoggerUtil;
 
 public class UserDaoLogin implements UserDao {
 	private Connection conn = ConnectionFactory.getConnection();
@@ -166,9 +169,11 @@ public class UserDaoLogin implements UserDao {
 
 		try {
 			stmt = conn.prepareStatement(sql);
+			LoggerUtil.debug("check1");
 			stmt.setString(1, user.getEmail());
 			stmt.setString(2, user.getPassword());
 			ResultSet rs = stmt.executeQuery();
+			LoggerUtil.debug("check2");
 
 			if (!rs.next()) {
 				return null;

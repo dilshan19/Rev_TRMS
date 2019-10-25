@@ -30,7 +30,7 @@ function sendToReason(){
             console.log("Processing");
         }
     }
-    xhr.open("POST", "supervisor?id="+this.id , true);
+    xhr.open("POST", "add?id="+this.id , true);
     xhr.send();
 
     // xhr.open("POST", "reject" , true);
@@ -96,7 +96,7 @@ function displayReimbursementList(reimb) {
             }
           }
     }
-    //buttonListener();
+    buttonListener();
 }
 
 function getAllReimbursements() {

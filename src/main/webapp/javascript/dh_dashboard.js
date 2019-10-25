@@ -9,9 +9,9 @@ function buttonListener(){
     for(elem of acceptButs){
         elem.addEventListener("click", accepts, false);
     }
-    // for(elem of denyButs){
-    //     elem.addEventListener("click", rejects, false);
-    // }
+    for(elem of denyButs){
+        elem.addEventListener("click", rejects, false);
+    }
 }
 
 function rejects(){
@@ -33,7 +33,7 @@ function rejects(){
 
     let string = "add?accept=1&id="+this.id;
 
-    xhr.open("POST", string , true);
+    xhr.open("PUT", string , true);
     xhr.send();
 
     // xhr.open("POST", "reject" , true);

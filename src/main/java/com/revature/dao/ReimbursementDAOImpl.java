@@ -72,8 +72,8 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 	public boolean insert(Reimbursement re) {
 		int result = 0;
 		try {
-			String sql = "insert into reimbursements(email,date_,location_,originalamount,tentativeamount,eventtype,description,format,isDS,isDH,isBC,isBCAltered,hasGrade) "
-					+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?);";
+			String sql = "insert into reimbursements(email,date_,location_,originalamount,tentativeamount,eventtype,description,format,isDS,isDH,isBC,isBCAltered,hasGrade,xfilePath) "
+					+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?);";
 			if (conn == null) {
 				LoggerUtil.error("Conn null");
 			}
@@ -82,7 +82,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			stmt.setString(count++, re.getRequestorEmail());
 			stmt.setObject(count++, re.getDate(), Types.DATE);
 			stmt.setString(count++, re.getLocation());
-			//stmt.setDouble(count++, re.getOriginalAmount());
+			stmt.setDouble(count++, re.getOriginalAmount());
 			stmt.setDouble(count++, re.getTentativeAmount());
 			stmt.setString(count++, re.getType());
 			stmt.setString(count++, re.getDescription());
