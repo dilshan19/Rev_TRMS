@@ -8,18 +8,18 @@ public interface ReimbursementDAO {
 	
 	public ArrayList<Reimbursement> getR(String email);
 	public boolean insert(Reimbursement re);//update or insert a Reimbursement entry
+	public boolean insertReimbStatus();
 	public String grabReason(int requestID);
 	//Update individual field in reimbursement table -> any of the booleans
-	public boolean updateToAccept(int id, int field);
+	public boolean updateReimbursementBooleans(int id, int field);
 	
 	//update only amount
 	public boolean updateAmount(int id, double amount);
-
-	//Remove row reimbursement table based on id
-	
 	
 	//add entry to rejected table based on id
-	public boolean insertDeniedR(int id, String email, String reason);
-	//
+	public boolean insertReason(int id, String email, String reason, int field);
+	
+
+	public boolean isRequestAcceptedByAll(int id);
 
 }

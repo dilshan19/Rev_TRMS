@@ -97,21 +97,44 @@ public class ReimbursementServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		try {
 			HttpSession session = req.getSession(false);
 			String name = req.getPathInfo();
-			int id = Integer.parseInt(req.getParameter("id"));			
+			int id = Integer.parseInt(req.getParameter("id"));	
+			boolean accept = Integer.parseInt( req.getParameter("accept") ) == 1;			
+			debug("(reimb) doPut, querystring params: " + id + ", accept: " + accept);
 			String type = (String) session.getAttribute("usertype");
 			String email = (String) session.getAttribute("email");
-			LoggerUtil.debug("(REIMBSERVLET) doPut, usertype: " + type);
 			if (type == "emp") {
-				error("An employee has access a non-requestor dashboard");
+				error("An requestor has tried accessing a non-requestor dashboard");
 				return;
 			}
-			debug("ID: " + id + " accepted");
-			reimburseServ.acceptReimbursement(id, email, type);
+			if(accept) {
+				debug("NON REQUESTOR ACCEPTED");
+				reimburseServ.acceptReimbursement(id, email, type);
+				reimburseServ.updateReimbursementTable(id);
+			}else {
+				debug("NR DID NOT accept");
+			}
+			//TODO: FIX THE REFRESH UPON PRESSING ACCEPT OR DENY
+			switch(type) {
+			case "ds":
+				debug("redirecting to: " + type + " page");
+				resp.sendRedirect("DSDashboard.html");
+				break;
+			case "dh":
+				debug("redirecting to: " + type + " page");
+				resp.sendRedirect("DHDashboard.html");
+				break;
+			case "bc":
+				debug("redirecting to: " + type + " page");
+				resp.sendRedirect("benco");
+				break;
+				default:
+					
+			}
 
 		} catch (Exception e) {
 			error(e);

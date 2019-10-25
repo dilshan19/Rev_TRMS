@@ -11,22 +11,26 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="reimbursement.css">
 
-    <title>Change Amount Form</title>
+    <title>Reimbursement Change Form</title>
 </head>
 
 <body>
     <div class="jumbotron jumbotron-fluid" id="placeholder-top">
         <div class="container">
-            <h1 class="display-4">Change Amount Form</h1>
+            <h1 class="display-4">Reimbursement Change Form</h1>
             <p class="lead">Please fill out required information</p>
         </div>
     </div>
     <div id="placeholder-left"></div>
     <div id="reimbursement-form">
-        <form method="POST" action="reject">
+        <form method="POST" action="alter">
+            <div class="form-group">
+                        <label for="address">Please enter an new amount.</label>
+                        <input type="text" class="form-control" id="amount" required name="amount" placeholder="Enter amount">
+            </div>
             <div class="form-row">                
                 <div class="form-group col-md-12">
-                    <label for="description">Please provide a reason.</label>
+                    <label for="description">Please explain why you changed the original amount</label>
                     <textarea rows="10" cols="20" class="form-control" id="reason" required name="reason"
                         placeholder="Enter text"></textarea>
                 </div>

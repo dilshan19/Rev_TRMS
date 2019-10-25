@@ -95,7 +95,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>deptHeadHome</servlet-name>
-		<url-pattern>/departmentHead</url-pattern>
+		<url-pattern>/departmentHead/*</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

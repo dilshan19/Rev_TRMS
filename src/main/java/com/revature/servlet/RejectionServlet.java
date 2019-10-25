@@ -44,11 +44,11 @@ public class RejectionServlet extends HttpServlet  {
 			String email = (String) session.getAttribute("email");
 			int id = (Integer) session.getAttribute("denyId");
 			debug("(RejectionServlet) doPost, employee email: " + email + " Empl type: " + reason);
-			if(type != "ds") {
-				debug("Not an supervisor. Go away!");
+			if(type == "ds") {
+				reimburseServ.insertReason(id, email, reason, type);
+				resp.sendRedirect("DSDashboard.html");
 			}else {
-				reimburseServ.insertReason(id, email, reason);
-				resp.sendRedirect("DSDashboard.html");					
+				debug("(rejection doPost) Not an supervisor. Go away!");
 			}
 		} catch (Exception e) {
 			debug("Supervisor exception, doPost");

@@ -30,8 +30,7 @@ public class BencoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			ObjectMapper om = new ObjectMapper();
-			String name = req.getPathInfo();
-			debug("(SUPERVISOR) doGet, ext: " + name);
+			debug("(BC) doGet)");
 			ArrayList<Reimbursement> reimbList = null;
 			HttpSession session = req.getSession(false);
 			String type = (String) session.getAttribute("usertype");
@@ -53,9 +52,28 @@ public class BencoServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+
+			HttpSession session = req.getSession(false);
+			String type = (String) session.getAttribute("usertype");
+
+			if (type != "bc") {
+				debug("Non-BC performed Put to rejection servlet");
+				return;
+			}
+			int id = Integer.parseInt(req.getParameter("id").substring(6));
+
+			// int id = Integer.parseInt( req.getParameter("id") );
+			debug("... " + id);
+			session.setAttribute("alterId", id);
+			debug("(BC) doGet, " + id);
+			resp.sendRedirect("alter");
+		} catch (Exception e) {
+			error("(bc doPost) error");
+			error(e);
+		}
 	}
 
 	/**

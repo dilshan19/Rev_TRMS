@@ -16,37 +16,51 @@ public class AlterAmountServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		try {
+			debug("(AlterAmountServlet) doGet");
 
+			HttpSession session = req.getSession(false);
+			String type = (String) session.getAttribute("usertype");
+			if (type != "bc") {
+				debug("Not an bc; Go away!");
+			} else {
+				resp.sendRedirect("changeAmount.html");
+				debug("redirected to alter page");
+			}
+		} catch (Exception e) {
+			debug("BC exception, doGet");
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		try {	
+			debug("(AlterAmountServlet) doPost");
+			HttpSession session = req.getSession(false);
+			String type = (String) session.getAttribute("usertype");
+			String amount = req.getParameter("amount");
+			String reason = req.getParameter("reason");
 
+			String email = (String) session.getAttribute("email");
+			int id = (Integer) session.getAttribute("alterId");
+			debug("(AlterServ) doPost, employee email: " + email + " amount: " + amount);
+			if(type != "bc") {
+				debug("Not an bc. Go away!");
+			}else {
+				debug("(BC) altering amount");
+				reimburseServ.alterAmount(id,  Double.parseDouble(amount) , reason, email);
+				resp.sendRedirect("BCDashboard.html");					
+			}
+		} catch (Exception e) {
+			debug("BC exception, doPost");
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		try {
-
-			HttpSession session = req.getSession(false);
-
-			String type = (String) session.getAttribute("usertype");
-
-			if (type != "bc") {
-				debug("Non-BC performed Put to rejection servlet");
-				return;
-			}
-			double id = Double.parseDouble(req.getParameter("id").substring(6));
-
-			// int id = Integer.parseInt( req.getParameter("id") );
-			debug("... " + id);
-			session.setAttribute("denyId", id);
-			info("(SupervisorServlet) doGet, " + id);
-			resp.sendRedirect("reject");
-		} catch (Exception e) {
-			error("(supervisor doPost) error");
-			error(e);
-		}
+	
 
 	}
 
