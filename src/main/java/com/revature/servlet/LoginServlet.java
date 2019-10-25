@@ -1,30 +1,88 @@
 package com.revature.servlet;
 
+import static com.revature.util.LoggerUtil.*;
+
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class LoginServlet extends HttpServlet  {
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.pojo.User;
+import com.revature.service.ReimbursementService;
+import com.revature.service.UserService;
+import com.revature.service.UserServiceImpl;
+import com.revature.util.LoggerUtil;
 
+/**
+ * Servlet implementation class LoginServlet
+ */
+public class LoginServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private static UserService userService = new UserServiceImpl();
+	private static ReimbursementService reimburseServ = new ReimbursementService();
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		System.out.println("Hello Get!");
-		PrintWriter pw = resp.getWriter();
-		String position = req.getParameter("position");
-		String name = req.getParameter("name");
-		
-		pw.write("<h1>Hello " + position +" : " + name + "!</h1>");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		/*
+		 * ObjectMapper om = new ObjectMapper(); String name = request.getPathInfo();
+		 * debug("(LOGINSERVLET) doGet, ext: " + name); HttpSession session =
+		 * request.getSession(false); String email = (String)
+		 * session.getAttribute("email");
+		 * LoggerUtil.debug("(LOGINSERVLET) doGet, email: " + email); if (name == null)
+		 * { // call after logging into employee
+		 * response.getWriter().write(om.writeValueAsString(reimburseServ.
+		 * getAllReimbursements(email))); }
+		 */
+
 	}
-	
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		System.out.println("Hello Post");
-		PrintWriter pw = resp.getWriter();
-		pw.write("<h3>Post method from HelloWorld servlet!</h3>");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String button = request.getParameter("registerbutton");
+		if ("".equals(button)) {
+			response.sendRedirect("register");
+		} else {
+
+			String name = request.getPathInfo();
+			debug("(LOGINSERVLET) doPost, ext: " + name);
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			User user = userService.loginUser(username, password);
+			if (user != null) {
+				request.getSession().setAttribute("email", user.getEmail());
+				request.getSession().setAttribute("pass", user.getPassword());
+				request.getSession().setAttribute("usertype", user.getManagerStatus());
+				if (user.getManagerStatus().equals("emp")) {
+					response.sendRedirect("employee");
+				} else if (user.getManagerStatus().equals("ds")) {
+					response.sendRedirect("supervisor");
+				} else if (user.getManagerStatus().equals("dh")) {
+					response.sendRedirect("departmentHead");
+				} else if (user.getManagerStatus().equals("bc")) {
+					response.sendRedirect("benco");
+				}else if(user.getManagerStatus().equals("dsdh")) {
+					response.sendRedirect("supervisor");
+				}else {
+					info("Couldn't find where to redirect you.");
+				}
+			}
+		}
 	}
-	
 }

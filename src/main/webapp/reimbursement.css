@@ -1,0 +1,11 @@
+#placeholder-top{
+}
+#placeholder-left{
+    width: 20%;
+    height: 10em;
+    display: inline-block;
+}
+#reimbursement-form{
+    width: 60%;
+    display: inline-block;
+}
