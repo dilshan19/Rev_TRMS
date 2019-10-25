@@ -53,6 +53,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				tempR.setBCApproved(r.getBoolean(count++));
 				tempR.setBCAltered(r.getBoolean(count++));
 				tempR.setGradeUploaded(r.getBoolean(count++));
+				tempR.setxFilePath(r.getString(count++));
 				//info(tempR.toString());
 
 				rList.add(tempR);
@@ -65,28 +66,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 		return (rList.size() != 0) ? rList : null;
 	}
 
-	@Override
-	public boolean insertReimbStatus() {
-		int result = 0;
 
-		try {
-			String sql = "insert into reimbstatus( dh, ds, bc) values ( ?, ?, ?);";
-
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			int count = 1;
-			stmt.setInt(count++, 0);
-			stmt.setInt(count++, 0);
-			stmt.setInt(count++, 0);
-			debug(stmt.toString());
-			result = stmt.executeUpdate(); // should be 1 row updated
-
-		} catch (SQLException e) {
-			error(e);
-			e.printStackTrace();
-
-		}
-		return result != 0;
-	}
 	
 	@Override
 	public boolean insert(Reimbursement re) {
@@ -102,7 +82,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			stmt.setString(count++, re.getRequestorEmail());
 			stmt.setObject(count++, re.getDate(), Types.DATE);
 			stmt.setString(count++, re.getLocation());
-			stmt.setDouble(count++, re.getOriginalAmount());
+			//stmt.setDouble(count++, re.getOriginalAmount());
 			stmt.setDouble(count++, re.getTentativeAmount());
 			stmt.setString(count++, re.getType());
 			stmt.setString(count++, re.getDescription());
@@ -112,6 +92,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			stmt.setBoolean(count++, re.isBCApproved());
 			stmt.setBoolean(count++, re.isBCAltered());
 			stmt.setBoolean(count++, re.getGradeUploaded());
+			stmt.setString(count++, re.getxFilePath());
 			result = stmt.executeUpdate(); // should be 1 row updated
 
 		} catch (SQLException e) {

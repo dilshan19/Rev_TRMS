@@ -9,50 +9,23 @@ import com.revature.pojo.User;
 import com.revature.service.UserService;
 import com.revature.service.UserServiceImpl;
 
-/**
- * Servlet implementation class LoginServlet
- */
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static UserService userService = new UserServiceImpl();
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public RegisterServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-//			throws ServletException, IOException {
-//		String username = request.getParameter("username");
-//		String password = request.getParameter("password");
-//		User user = userService.loginUser(username, password);
-//		if (user != null) {
-//			response.getWriter().write("Welcome to your homepage" + user.getFullName());
-//		} else {
-//			response.getWriter().write("Invalid login credentials");
-//		}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			request.getRequestDispatcher("register.html").forward(request, response);
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String firstName = request.getParameter("firstname");
@@ -62,14 +35,9 @@ public class RegisterServlet extends HttpServlet {
 		String role = request.getParameter("role");
 		User user = userService.registerUser(firstName, lastName, username, password, role);
 		if (user != null) {
-			//response.sendRedirect("login");
 			try {
 				request.getRequestDispatcher("login.html").forward(request, response);
-			} catch (ServletException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else {

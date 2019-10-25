@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
@@ -128,5 +128,23 @@
 		<servlet-name>Alter</servlet-name>
 		<url-pattern>/alter/*</url-pattern>
 	</servlet-mapping>
-	
+	 <servlet>
+    <display-name>PersistAndOpenFileServlet</display-name>
+    <servlet-name>PersistAndOpenFileServlet</servlet-name>
+    <servlet-class>com.revature.servlet.PersistAndOpenFileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PersistAndOpenFileServlet</servlet-name>
+    <url-pattern>/file</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FilenameToDbServlet</display-name>
+    <servlet-name>FilenameToDbServlet</servlet-name>
+    <servlet-class>com.revature.servlet.FilenameToDbServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FilenameToDbServlet</servlet-name>
+    <url-pattern>/filetodb</url-pattern>
+  </servlet-mapping>
 </web-app>

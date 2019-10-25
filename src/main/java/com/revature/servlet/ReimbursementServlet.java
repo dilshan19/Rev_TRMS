@@ -87,11 +87,22 @@ public class ReimbursementServlet extends HttpServlet {
 		reimb.setTentativeAmount(amount);
 		reimb.setDescription(req.getParameter("description"));
 		reimb.setFormat(req.getParameter("gradeformat"));
-		if (reimburseServ.addReimbursement(reimb)) {
+		String xfilePath = "";
+		reimb.setxFilePath(xfilePath);
+		if( reimburseServ.addReimbursement(reimb) ) {
 			pw.write("Successfully added your submission!");
 		} else {
 			pw.write("Could not process your form!");
 		}
+//		String fileUp = req.getParameter("fileupl");
+//		if(!"".equals(fileUp)) {
+//			//resp.sendRedirect("fileupload");
+//			try {
+//				req.getRequestDispatcher("fileupload").forward(req, resp);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 		resp.sendRedirect("employee.html");
 
 	}

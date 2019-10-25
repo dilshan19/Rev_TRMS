@@ -19,6 +19,7 @@ public class Reimbursement {
 	private boolean isDHApproved = false;
 	private boolean isBCApproved = false;
 	private boolean isBCAltered = false;
+	private String xfilePath;
 	
 	public Reimbursement() {
 		super();
@@ -122,6 +123,13 @@ public class Reimbursement {
 	}
 	public void setGradeUploaded(boolean isGradeUploaded) {
 		this.isGradeUploaded = isGradeUploaded;
+	}
+	public String getxFilePath() {
+		return xfilePath;
+	}
+
+	public void setxFilePath(String xfilePath) {
+		this.xfilePath = xfilePath;
 	}
 	@Override
 	public String toString() {

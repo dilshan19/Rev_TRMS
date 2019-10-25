@@ -16,8 +16,7 @@ public class ReimbursementService {
 	
 	public boolean addReimbursement(Reimbursement r) {//add input checks here
 		boolean check1 = reimbursementService.insert(r);
-		boolean check2 = reimbursementService.insertReimbStatus();
-		LoggerUtil.debug("Adding reimb. Check1: " + check1 + " , check2: " + check2);
+		LoggerUtil.debug("Adding reimb. Check1: " + check1);
 		return check1;
 	}
 	

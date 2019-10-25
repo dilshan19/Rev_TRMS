@@ -19,6 +19,9 @@
 		<div class="container">
 			<h1 class="display-4">Employee Dashboard</h1>
 			<p class="lead">Below are all your pending requests</p>
+			<form id="sign-out-form" action="logout" method="POST">
+				<a onclick="document.getElementById('sign-out-form').submit();">Sign Out</a>
+			</form>
 		</div>
 	</div>
 	<div id="placeholder-left"></div>
@@ -41,6 +44,7 @@
 						<th scope="col">D.H. Approval</th>
 						<th scope="col">B.C. Approval</th>
 						<th scope="col">Altered by B.C.?</th>
+						<th scope="col">filepath</th>
 					</tr>
 				</thead>
 				<tbody>

@@ -8,7 +8,6 @@ public interface ReimbursementDAO {
 	
 	public ArrayList<Reimbursement> getR(String email);
 	public boolean insert(Reimbursement re);//update or insert a Reimbursement entry
-	public boolean insertReimbStatus();
 	public String grabReason(int requestID);
 	//Update individual field in reimbursement table -> any of the booleans
 	public boolean updateReimbursementBooleans(int id, int field);
