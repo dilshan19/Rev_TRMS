@@ -1,0 +1,15 @@
+#filler {
+    float: left;
+    width: 30%;
+    height: 30%;
+    padding: 20px;
+}
+
+#loginForm {
+    float: left;
+    width: 30%;
+    height: 30%;
+    border: 3px;
+    padding: 20px;
+    border-style: outset;
+}

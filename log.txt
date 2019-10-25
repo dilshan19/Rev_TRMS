@@ -1,0 +1,91 @@
+2019-10-15 20:30:44 TRACE root:44 - User logged in
+2019-10-19 12:03:15 INFO  root:29 - Reimbursement [requestorEmail=john.smith@gmail.com, location=New Yoke, type=Course, description=description!, format=letter, date=2019-10-19, originalAmount=99.99, tentativeAmount=50.0, isDSApproved=false, isDHApproved=false, isBCApproved=false, isBCAltered=false, isGradeUploaded=false]
+2019-10-19 12:03:15 INFO  root:29 - Reimbursement [requestorEmail=john.smith@gmail.com, location=New Yoke, type=Course, description=description!, format=letter, date=2019-10-19, originalAmount=99.99, tentativeAmount=50.0, isDSApproved=false, isDHApproved=false, isBCApproved=false, isBCAltered=false, isGradeUploaded=false]
+2019-10-19 12:10:16 INFO  root:29 - Reimbursement [requestorEmail=john.smith@gmail.com, location=New Yoke, type=Course, description=description!, format=letter, date=2019-10-19, originalAmount=99.99, tentativeAmount=50.0, isDSApproved=false, isDHApproved=false, isBCApproved=false, isBCAltered=false, isGradeUploaded=false]
+2019-10-19 12:10:16 INFO  root:29 - Reimbursement [requestorEmail=john.smith@gmail.com, location=New Yoke, type=Course, description=description!, format=letter, date=2019-10-19, originalAmount=99.99, tentativeAmount=50.0, isDSApproved=false, isDHApproved=false, isBCApproved=false, isBCAltered=false, isGradeUploaded=false]
+2019-10-19 12:10:48 INFO  root:29 - Reimbursement [requestorEmail=john.smith@gmail.com, location=New Yoke, type=Course, description=description!, format=letter, date=2019-10-19, originalAmount=99.99, tentativeAmount=50.0, isDSApproved=false, isDHApproved=false, isBCApproved=false, isBCAltered=false, isGradeUploaded=false]
+2019-10-19 12:12:11 INFO  root:29 - Reimbursement [requestorEmail=john.smith@gmail.com, location=New Yoke, type=Course, description=description!, format=letter, date=2019-10-19, originalAmount=99.99, tentativeAmount=50.0, isDSApproved=false, isDHApproved=false, isBCApproved=false, isBCAltered=false, isGradeUploaded=false]
+2019-10-19 12:15:40 INFO  root:29 - 2019-10-19
+2019-10-19 12:22:42 INFO  root:29 - 2019-10-19
+2019-10-19 12:23:38 INFO  root:29 - select * from reimbursements where email = 'john.smith@gmail.com'
+2019-10-19 12:23:38 INFO  root:29 - 2019-10-19
+2019-10-19 12:25:53 INFO  root:29 - select * from reimbursements where email = 'john.smith@gmail.com'
+2019-10-19 12:25:53 INFO  root:29 - 2019-10-19
+2019-10-19 12:29:42 INFO  root:29 - select * from reimbursements where email = 'john.smith@gmail.com'
+2019-10-19 12:29:42 INFO  root:29 - 2019-10-19
+2019-10-19 12:32:56 INFO  root:29 - select * from reimbursements where email = 'john.smith@gmail.com'
+2019-10-19 12:32:56 INFO  root:29 - 2019-10-19
+2019-10-19 12:34:35 INFO  root:29 - 2019-10-19
+2019-10-19 12:35:26 INFO  root:29 - Fetched date: 2019-10-19
+2019-10-19 12:35:57 INFO  root:29 - Fetched date: 2019-10-19
+2019-10-19 12:35:57 INFO  root:29 - Fetched date: 2019-10-19
+2019-10-19 12:36:48 INFO  root:29 - Fetched email: 2019-10-19
+2019-10-19 12:36:48 INFO  root:29 - Fetched date: 2019-10-19
+2019-10-19 12:36:48 INFO  root:29 - fake date: 2019-10-19
+2019-10-19 12:39:30 INFO  root:29 - Fetched email: 2019-10-19 count: 3
+2019-10-19 12:40:45 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 12:40:45 INFO  root:29 - Fetched date: 2019-10-19 count: 3
+2019-10-19 12:41:33 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 12:41:33 INFO  root:29 - Fetched date: 2019-10-19 count: 3
+2019-10-19 12:41:33 INFO  root:29 - Fetched loc: New Yoke count: 4
+2019-10-19 12:43:05 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 12:43:05 INFO  root:29 - Fetched date: 2019-10-19 count: 3
+2019-10-19 12:43:05 INFO  root:29 - Fetched loc: New Yoke count: 4
+2019-10-19 12:43:05 INFO  root:29 - Count: 15
+2019-10-19 12:44:34 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 12:48:19 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 12:48:57 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 12:48:57 INFO  root:29 - 2019-10-19
+2019-10-19 12:52:28 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 12:52:28 INFO  root:29 - 2019-10-19
+2019-10-19 12:53:41 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 12:53:41 INFO  root:29 - 1: 2019-10-19
+2019-10-19 12:53:41 INFO  root:29 - 2: 2019-10-19
+2019-10-19 12:53:41 INFO  root:29 - 3: 2019-10-19
+2019-10-19 12:54:03 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 12:54:03 INFO  root:29 - 1: 2019-10-19
+2019-10-19 12:54:03 INFO  root:29 - 2: 2019-10-19
+2019-10-19 12:54:03 INFO  root:29 - 3: 2019-10-19
+2019-10-19 12:54:18 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 12:54:18 INFO  root:29 - 1: 2019-10-19
+2019-10-19 12:54:18 INFO  root:29 - 2: 2019-10-19
+2019-10-19 12:54:18 INFO  root:29 - 3: 2019-10-19
+2019-10-19 12:56:06 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 12:56:06 INFO  root:29 - 1: 2019-10-19
+2019-10-19 12:56:06 INFO  root:29 - 2: 2019-10-19
+2019-10-19 12:56:06 INFO  root:29 - 3: 2019-10-19
+2019-10-19 12:56:06 INFO  root:29 - Equal? true
+2019-10-19 12:57:03 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 12:57:03 INFO  root:29 - 1: 2019-10-19
+2019-10-19 12:57:03 INFO  root:29 - 2: 2019-10-19
+2019-10-19 12:57:03 INFO  root:29 - 3: 2019-10-19
+2019-10-19 12:57:03 INFO  root:29 - Equal? true
+2019-10-19 13:00:22 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 13:00:22 INFO  root:29 - 1: 2019-10-19
+2019-10-19 13:00:22 INFO  root:29 - 2: 2019-10-19
+2019-10-19 13:00:22 INFO  root:29 - 3: 2019-10-19
+2019-10-19 13:00:22 INFO  root:29 - Equal? true
+2019-10-19 13:02:40 INFO  root:29 - Reimbursement [requestorEmail=john.smith@gmail.com, location=New Yoke, type=Course, description=description!, format=letter, date=2019-10-19, originalAmount=99.99, tentativeAmount=50.0, isDSApproved=false, isDHApproved=false, isBCApproved=false, isBCAltered=false, isGradeUploaded=false]
+2019-10-19 13:02:40 INFO  root:29 - select * from reimbursements where email = 'john.smith@gmail.com'
+2019-10-19 13:02:40 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 13:02:40 INFO  root:29 - 1: 2019-10-19
+2019-10-19 13:02:40 INFO  root:29 - 2: 2019-10-19
+2019-10-19 13:02:40 INFO  root:29 - 3: 2019-10-19
+2019-10-19 13:02:40 INFO  root:29 - Equal? true
+2019-10-19 13:02:40 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 13:02:40 INFO  root:29 - 1: 2019-10-19
+2019-10-19 13:02:40 INFO  root:29 - 2: 2019-10-19
+2019-10-19 13:02:40 INFO  root:29 - 3: 2019-10-19
+2019-10-19 13:02:40 INFO  root:29 - Equal? true
+2019-10-19 13:05:12 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 13:05:12 INFO  root:29 - 1: 2019-10-19
+2019-10-19 13:05:12 INFO  root:29 - 2: 2019-10-19
+2019-10-19 13:05:12 INFO  root:29 - 3: 2019-10-19
+2019-10-19 13:05:12 INFO  root:29 - Equal? true
+2019-10-19 13:07:42 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 13:12:44 INFO  root:29 - select * from reimbursements where email = 'john.smith@gmail.com'
+2019-10-19 13:12:44 INFO  root:29 - Fetched email: john.smith@gmail.com count: 2
+2019-10-19 13:12:44 INFO  root:29 - 1: 2019-10-19
+2019-10-19 13:12:44 INFO  root:29 - 2: 2019-10-19
+2019-10-19 13:12:44 INFO  root:29 - 3: 2019-10-19
+2019-10-19 13:12:44 INFO  root:29 - Equal? true
