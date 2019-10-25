@@ -169,11 +169,9 @@ public class UserDaoLogin implements UserDao {
 
 		try {
 			stmt = conn.prepareStatement(sql);
-			LoggerUtil.debug("check1");
 			stmt.setString(1, user.getEmail());
 			stmt.setString(2, user.getPassword());
 			ResultSet rs = stmt.executeQuery();
-			LoggerUtil.debug("check2");
 
 			if (!rs.next()) {
 				return null;
@@ -186,5 +184,14 @@ public class UserDaoLogin implements UserDao {
 		System.out.println(System.lineSeparator());
 		return user;
 	}
+
+	@Override
+	public String getReason(int id) {
+		String result = null;
+		
+		return result;
+	}
+	
+	
 
 }

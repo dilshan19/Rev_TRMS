@@ -49,7 +49,11 @@ function displayReimbursementList(rList) {
 	    	      x.setAttribute("type", "file");
 	    	      cell.appendChild(x);
                   x.addEventListener("change", fileUpdater);
-
+                  if(rList[i]["dsapproved"] == true && rList[i]["dhapproved"] == true && rList[i]["bcapproved"] == true){
+                    row.style.backgroundColor =  "#00FA9A";
+                }else{
+                    row.style.backgroundColor =  "#ff9999";
+                }
     }
 
 }

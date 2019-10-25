@@ -123,7 +123,7 @@ public class ReimbursementServlet extends HttpServlet {
 				return;
 			}
 			if(accept) {
-				debug("NON REQUESTOR ACCEPTED");
+				debug("NON REQUESTOR ACCEPTED: " + id + " , type: " + type);
 				reimburseServ.acceptReimbursement(id, email, type);
 				reimburseServ.updateReimbursementTable(id);
 			}else {
@@ -133,11 +133,11 @@ public class ReimbursementServlet extends HttpServlet {
 			switch(type) {
 			case "ds":
 				debug("redirecting to: " + type + " page");
-				resp.sendRedirect("DSDashboard.html");
+				resp.sendRedirect("supervisor");
 				break;
 			case "dh":
 				debug("redirecting to: " + type + " page");
-				resp.sendRedirect("DHDashboard.html");
+				resp.sendRedirect("departmentHead");
 				break;
 			case "bc":
 				debug("redirecting to: " + type + " page");

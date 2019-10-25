@@ -131,6 +131,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			}
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
+			debug(stmt.toString());
 			result = stmt.executeUpdate(); // should be 1 row updated
 		} catch (SQLException e) {
 			error(e);

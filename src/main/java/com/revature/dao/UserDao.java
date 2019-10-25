@@ -13,4 +13,6 @@ public interface UserDao {
 	public User registerUser(User user);
 	
 	public User registerDao(User user); 
+	
+	public String getReason(int id);
 }

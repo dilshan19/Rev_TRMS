@@ -17,7 +17,10 @@
     <div class="jumbotron jumbotron-fluid" id="placeholder-top">
 		<div class="container">
 			<h1 class="display-4">Department Head Dashboard</h1>
-			<p class="lead">Below are all pending requests</p>
+            <p class="lead">Below are all pending requests</p>
+            <form id="sign-out-form" action="logout" method="POST">
+                    <a onclick="document.getElementById('sign-out-form').submit();">Sign Out</a>
+                </form>
 		</div>
 	</div>
 	<div id="placeholder-left"></div>
