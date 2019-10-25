@@ -52,6 +52,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				tempR.setBCApproved(r.getBoolean(count++));
 				tempR.setBCAltered(r.getBoolean(count++));
 				tempR.setGradeUploaded(r.getBoolean(count++));
+				tempR.setxFilePath(r.getString(count++));
 				//info(tempR.toString());
 
 				rList.add(tempR);
@@ -69,8 +70,8 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 		debug(re.toString());
 
 		try {
-			String sql = "insert into reimbursements(email,date_,location_,originalamount,tentativeamount,eventtype,description,format,isDS,isDH,isBC,isBCAltered,hasGrade) "
-					+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?);";
+			String sql = "insert into reimbursements(email,date_,location_,tentativeamount,eventtype,description,format,isDS,isDH,isBC,isBCAltered,hasGrade,xfilepath) "
+					+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?, ?);";
 			if (conn == null) {
 				LoggerUtil.error("Conn null");
 			}
@@ -79,7 +80,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			stmt.setString(count++, re.getRequestorEmail());
 			stmt.setObject(count++, re.getDate(), Types.DATE);
 			stmt.setString(count++, re.getLocation());
-			stmt.setDouble(count++, re.getOriginalAmount());
+			//stmt.setDouble(count++, re.getOriginalAmount());
 			stmt.setDouble(count++, re.getTentativeAmount());
 			stmt.setString(count++, re.getType());
 			stmt.setString(count++, re.getDescription());
@@ -89,6 +90,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			stmt.setBoolean(count++, re.isBCApproved());
 			stmt.setBoolean(count++, re.isBCAltered());
 			stmt.setBoolean(count++, re.getGradeUploaded());
+			stmt.setString(count++, re.getxFilePath());
 			result = stmt.executeUpdate(); // should be 1 row updated
 
 		} catch (SQLException e) {

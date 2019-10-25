@@ -1,42 +1,91 @@
-window.onload = function() {
-    this.console.log("Hello World");
-    this.getMyReimbursements(); 
-}
 
+window.onload = function () {
+    this.console.log("Hello World");
+    this.getMyReimbursements();
+}
+var eventRow;
 function displayReimbursementList(rList) {
     let tableBody = document.getElementById("reimbTable").getElementsByTagName('tbody')[0];
-    let count;
-    for(let i = 0; i < rList.length; i++) {
+    for (let i = 0; i < rList.length; i++) {
         let row = tableBody.insertRow(-1);
-        console.log(rList[i]);
-        count = 0;
-        for (let property in rList[i]) {
-            if (rList[i].hasOwnProperty(property)) {
-                let val = rList[i][property];
-                let cell = row.insertCell(count); 
-                if(count == 3){
-                    let d = val.dayOfMonth;
-                    let m = val.monthValue + 1; // Month is 0-indexed
-                    let y = val.year;
-                    cell.innerHTML = m+"-"+d+"-"+y;
-                }else if(count == 7){
-                    cell.innerHTML = "$" + val;
-                }else if(count > 8){
-                    cell.innerHTML = (val === true) ? "Yes" : "No";
-                }else{
-                    cell.innerHTML = val;    
-                }
-                count++;
-            }
-          }
+        z = 0;
+                let cell = row.insertCell(z++);
+                cell.innerHTML = rList[i]["id"];
+                cell = row.insertCell(z++);
+                cell.innerHTML = rList[i]["requestorEmail"];
+                cell = row.insertCell(z++);
+                cell.innerHTML = rList[i]["location"];
+                cell = row.insertCell(z++);
+                let val = rList[i]["date"];
+                let d = val.dayOfMonth;
+                let m = val.monthValue + 1; 
+                let y = val.year;
+                cell.innerHTML = m + "-" + d + "-" + y;
+                cell = row.insertCell(z++);
+                cell.innerHTML = rList[i]["type"];
+                cell = row.insertCell(z++);
+                cell.innerHTML = rList[i]["description"];
+                cell = row.insertCell(z++);
+                cell.innerHTML = rList[i]["format"];
+                cell = row.insertCell(z++);
+                cell.innerHTML = "$" + rList[i]["originalAmount"];
+                cell = row.insertCell(z++);
+                cell.innerHTML = rList[i]["tentativeAmount"];
+                cell = row.insertCell(z++);
+                cell.innerHTML = rList[i]["gradeUploaded"];
+                cell = row.insertCell(z++);
+                cell.innerHTML = rList[i]["dsapproved"];
+                cell = row.insertCell(z++);
+                cell.innerHTML = rList[i]["dhapproved"];
+                cell = row.insertCell(z++);
+                cell.innerHTML = rList[i]["bcapproved"];
+                cell = row.insertCell(z++);
+                cell.innerHTML = rList[i]["bcaltered"];
+                cell = row.insertCell(z++);
+                cell.innerHTML = rList[i]["xFilePath"];
+                cell.addEventListener("click", fileListener);
+                cell = row.insertCell(z++);
+	      	    var x = document.createElement("INPUT");
+	    	      x.setAttribute("type", "file");
+	    	      cell.appendChild(x);
+                  x.addEventListener("change", fileUpdater);
 
     }
-    //buttonListener();
+
 }
+
+function fileListener(event){
+	//let newCell = document.getElementById("reimbTable").rows[document.getElementById("reimbTable").rows.length - 1].cells[14];
+	//console.log(event.target.parentElement.row);
+	//newCell = document.getElementById("reimbTable").rows[event.target.row].cells[14];
+	//console.log(eventRow);
+	let jValue = event.target.innerHTML;
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", "file", true);
+    xhr.send(JSON.stringify(jValue));
+};
+
+function fileUpdater(event){
+	//let newCell = document.getElementById("reimbTable").rows[document.getElementById("reimbTable").rows.length - 1].cells[14];
+	let newCell2 = event.target;
+	let jValue = newCell2.value;
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", "file", true);
+    xhr.send(JSON.stringify(jValue));
+    eventRow = event.currentTarget.parentNode.parentNode.rowIndex;
+    let changeCell = document.getElementById("reimbTable").getElementsByTagName('tbody')[0].rows[eventRow-1].cells[14];
+    changeCell.innerHTML = this.files[0]["name"];
+    while(!xhr.readyState==4 && !xhr.status==200) {};
+	idCell = document.getElementById("reimbTable").getElementsByTagName('tbody')[0].rows[eventRow-1].cells[0];
+	stringCell = document.getElementById("reimbTable").getElementsByTagName('tbody')[0].rows[eventRow-1].cells[14];
+	xhr = new XMLHttpRequest();
+	xhr.open("POST", "filetodb", true);
+    xhr.send(JSON.stringify(idCell.innerHTML + "%" + stringCell.innerHTML));
+};
 
 function getMyReimbursements() {
     let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 console.log("Break1: ");

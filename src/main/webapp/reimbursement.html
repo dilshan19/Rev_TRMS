@@ -10,15 +10,23 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="reimbursement.css">
-
     <title>Reimbursement</title>
     <script>
-        window.onload = function(){
+        window.onload = function () {
             updateDate();
+            document.getElementById('submitrequest').addEventListener("click", updateFilePath)
+
+            function updateFilePath(event) {
+                let hiddenIn = document.getElementById('filepath');
+                let upl = document.getElementById('fileupl');
+                hiddenIn.value = upl.value;
+                let form = document.getElementById('fileform');
+                form.submit();
+            }
         }
-        function updateDate(){
+        function updateDate() {
             let d = new Date();
-            let new_d = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+            let new_d = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
             document.getElementById("eventdate").min = new_d;
         }
     </script>
@@ -33,7 +41,7 @@
     </div>
     <div id="placeholder-left"></div>
     <div id="reimbursement-form">
-        <form method="POST" action="add">
+        <form method="POST" id="reimbform" method="POST" action="add">
             <div class="form-row">
 
                 <div class="form-group col-md-6">
@@ -146,10 +154,15 @@
                         placeholder="Enter description"></textarea>
                 </div>
             </div>
+            <br>
+            <br>
             <button type="submit" id="submitrequest" required name="submitrequest" class="btn btn-primary">Submit
                 Request</button>
         </form>
     </div>
+    <br>
+    <br>
+    <br>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
