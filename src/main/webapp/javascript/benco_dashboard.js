@@ -7,14 +7,14 @@ function buttonListener(){
     let acceptButs = document.querySelectorAll("[name=accept]");
     let denyButs = document.querySelectorAll("[name=deny]");
     for(elem of acceptButs){
-        elem.addEventListener("click", updateReimb, false);
+        elem.addEventListener("click", accepts, false);
     }
     for(elem of denyButs){
-        elem.addEventListener("click", sendToReason, false);
+        elem.addEventListener("click", rejects, false);
     }
 }
 
-function sendToReason(){
+function rejects(){
     console.log( "Deny RequestID: " + this.id);
     let xhr = new XMLHttpRequest();
     console.log(this);
@@ -30,14 +30,15 @@ function sendToReason(){
             console.log("Processing");
         }
     }
-    xhr.open("POST", "supervisor?id="+this.id , true);
+    let string = "add?accept=0&id="+this.id;
+    xhr.open("PUT", string , true);
     xhr.send();
 
     // xhr.open("POST", "reject" , true);
     // xhr.send("id="+this.id);
 }
 
-function updateReimb () {
+function accepts () {
     console.log( "accept RequestID: " + this.id);
     let xhr = new XMLHttpRequest();
     console.log(this);
@@ -73,8 +74,10 @@ function displayReimbursementList(reimb) {
                 if(count == 0){
                     let cell2 = row.insertCell(count++); 
                     cell2.innerHTML = "<tr><td><div><div><button class=\"option-button\" name=\"accept\" id=\""+val+"\">"+
-                    "<span>Accept</span></button></div><form method=\"POST\" action=\"supervisor\">"+
-                    "<input type=\"submit\" class=\"option-button\" name=\"id\" value=\"Deny "+val+"\">"+
+                    "<span>Accept</span></button>"+"<button class=\"option-button\" name=\"deny\" id=\""+val+"\">"+
+                    "<span>Deny</span></button>"+
+                    "</div><form method=\"POST\" action=\"benco\">"+
+                    "<input type=\"submit\" class=\"alter-button\" name=\"id\" value=\"Alter "+val+"\">"+
                     "</input></form></div></td></tr>";
 
                     let cell = row.insertCell(count);
@@ -96,7 +99,7 @@ function displayReimbursementList(reimb) {
             }
           }
     }
-    //buttonListener();
+    buttonListener();
 }
 
 function getAllReimbursements() {

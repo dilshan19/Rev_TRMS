@@ -27,32 +27,27 @@ public class EmployeeServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public EmployeeServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 //		String name = ((User)(request.getSession().getAttribute("user"))).getFullName();
 //		String message = getServletContext().getInitParameter("message");
 //		String role = getServletConfig().getInitParameter("role");
-//		response.getWriter().write(message + " " + role + " " + name);
-		ObjectMapper om = new ObjectMapper();
-		String name = request.getPathInfo();
-		debug("(EMPSERVLET) doGet, ext: " + name);
-		ArrayList<Reimbursement> reimbList = null;
+//		response.getWriter().write(message + " " + role + " " + name);		
 		try {
+			ObjectMapper om = new ObjectMapper();
+
 			HttpSession session = request.getSession(false);
+			String type = (String) session.getAttribute("usertype");
 			String email = (String) session.getAttribute("email");
-			LoggerUtil.debug("Employee email: " + email);
-			reimbList = reimburseServ.getAllReimbursements(email);
-			response.sendRedirect("employee.html");	
+			debug("(EMPSERVLET) doGet, employee email: " + email + " Empl type: " + type);
+			if(type != "emp") {
+				debug("Not an employee! Go away!");
+			}else {
+				response.sendRedirect("employee.html");	
+			}
 		} catch (Exception e) {
+			debug("employee exception, doGet");
 			e.printStackTrace();
 		}
 
@@ -66,10 +61,9 @@ public class EmployeeServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String name = request.getPathInfo();
-		debug("(EMPSERVLET) doPost, ext: " + name);
 		try {
 			HttpSession session = request.getSession(false);
 			String email = (String) session.getAttribute("email");

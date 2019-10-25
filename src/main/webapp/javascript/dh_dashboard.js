@@ -7,14 +7,14 @@ function buttonListener(){
     let acceptButs = document.querySelectorAll("[name=accept]");
     let denyButs = document.querySelectorAll("[name=deny]");
     for(elem of acceptButs){
-        elem.addEventListener("click", updateReimb, false);
+        elem.addEventListener("click", accepts, false);
     }
-    for(elem of denyButs){
-        elem.addEventListener("click", sendToReason, false);
-    }
+    // for(elem of denyButs){
+    //     elem.addEventListener("click", rejects, false);
+    // }
 }
 
-function sendToReason(){
+function rejects(){
     console.log( "Deny RequestID: " + this.id);
     let xhr = new XMLHttpRequest();
     console.log(this);
@@ -30,14 +30,17 @@ function sendToReason(){
             console.log("Processing");
         }
     }
-    xhr.open("POST", "supervisor?id="+this.id , true);
+
+    let string = "add?accept=1&id="+this.id;
+
+    xhr.open("POST", string , true);
     xhr.send();
 
     // xhr.open("POST", "reject" , true);
     // xhr.send("id="+this.id);
 }
 
-function updateReimb () {
+function accepts () {
     console.log( "accept RequestID: " + this.id);
     let xhr = new XMLHttpRequest();
     console.log(this);

@@ -2,6 +2,7 @@ package com.revature.dao;
 
 import static com.revature.util.LoggerUtil.*;
 
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -65,13 +66,14 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 		return (rList.size() != 0) ? rList : null;
 	}
 
+
+	
+	@Override
 	public boolean insert(Reimbursement re) {
 		int result = 0;
-		debug(re.toString());
-
 		try {
-			String sql = "insert into reimbursements(email,date_,location_,tentativeamount,eventtype,description,format,isDS,isDH,isBC,isBCAltered,hasGrade,xfilepath) "
-					+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?, ?);";
+			String sql = "insert into reimbursements(email,date_,location_,originalamount,tentativeamount,eventtype,description,format,isDS,isDH,isBC,isBCAltered,hasGrade) "
+					+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?);";
 			if (conn == null) {
 				LoggerUtil.error("Conn null");
 			}
@@ -102,29 +104,30 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 	}
 
 	@Override
-	public boolean update(int id, int field) {
+	public boolean updateReimbursementBooleans(int id, int field) {
 		int result = 0;
 		try {
 			String sql = null;
 			switch(field) {
 			case 0:
-				sql = "update reimbursements set isDSAltered = true where isDS = ?";
+				sql = "update reimbursements set isDS = true where requestid = ?";
 				break;
 			case 1:
-				sql = "update reimbursements set isDHAltered = true where isDH = ?";
+				sql = "update reimbursements set isDH = true where requestid = ?";
 				break;
 			case 2:
-				sql = "update reimbursements set isBCAltered = true where isBC = ?";
+				sql = "update reimbursements set isBC = true where requestid = ?";
 				break;
 			case 3:
-				sql = "update reimbursements set isBCaltered = true where isBCaltered = ?";
+				sql = "update reimbursements set isDS = true where requestid = ?;";
+				sql = "update reimbursements set isDH = true where requestid = ?;";
+				break;
+			case 4:	//both DH and DS
+				sql = "update reimbursements set isBCAltered = true where requestid = ?";
 				break;
 				default:
 					error("Select a correct field option");
 					return false;
-			}
-			if (conn == null) {
-				LoggerUtil.error("Conn null");
 			}
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
@@ -133,7 +136,85 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			error(e);
 			e.printStackTrace();
 		}
+		return result != 0;
+	}
+
+	@Override
+	public String grabReason(int requestID) {
+		
+		
+		
+		return null;
+	}
+
+	@Override
+	public boolean insertReason(int id, String email, String reason, int field) {
+		int result = 0;
+		try {
+			String sql = null;
+			if(field == 0) {	//Direct Supervisor
+				sql = "insert into rejected(id,email,reason) values(?, ?, ?);";
+			}else {	//BenCo
+				sql = "insert into bencoupdates(id,email,reason) values(?, ?, ?);";
+			}
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			int count = 1;
+			stmt.setInt(count++, id);
+			stmt.setString(count++, email);
+			stmt.setString(count++, reason);
+			result = stmt.executeUpdate(); // should be 1 row updated
+
+		} catch (SQLException e) {
+			error(e);
+			e.printStackTrace();
+
+		}
 		return result == 1;
 	}
+
+	@Override
+	public boolean updateAmount(int id, double amount) {
+		int result = 0;
+		try {
+			String sql = "update reimbursements set tentativeamount = ? where requestid = ?;";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(2, id);
+			stmt.setDouble(1, amount);
+			debug(stmt.toString());
+			result = stmt.executeUpdate(); // should be 1 row updated
+		} catch (SQLException e) {
+			error(e);
+			e.printStackTrace();
+		}
+		debug("result: " + result);
+		return result == 1;
+	}
+
+
+
+	@Override
+	public boolean isRequestAcceptedByAll(int id) {
+		boolean check = false;
+		String sql = "Select * from reimbursements where requestid = ?";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			ResultSet r = stmt.executeQuery();
+
+			while(r.next() != false) {
+				if( r.getBoolean("isDS") && r.getBoolean("isBC") && r.getBoolean("isDH") ) {
+					check = true;
+				}
+			}
+			r.close();
+		}catch(SQLException e) {
+			debug("State: " + e.getSQLState());
+			e.printStackTrace();
+		}
+		return check;
+	}
+
+
 
 }
