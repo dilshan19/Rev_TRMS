@@ -97,4 +97,14 @@ public class ReimbursementDAOTest {
 		rList.add(r);
 		assertEquals(rList, rDAO.getR(null) );
 	}
+	
+	@Test
+	public void checkForAllAcceptFields() {
+		int PASS_ID = 1;
+		assertEquals(true, rDAO.isRequestAcceptedByAll(PASS_ID) );
+		int FAIL_ID = 2;
+		assertEquals(false, rDAO.isRequestAcceptedByAll(FAIL_ID) );
+
+	}
+	
 }

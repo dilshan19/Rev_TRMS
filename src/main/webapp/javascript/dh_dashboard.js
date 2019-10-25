@@ -89,7 +89,7 @@ function displayReimbursementList(rList) {
                 cell = row.insertCell(z++);
                 cell.innerHTML = "$" + rList[i]["originalAmount"];
                 cell = row.insertCell(z++);
-                cell.innerHTML = rList[i]["tentativeAmount"];
+                cell.innerHTML = "$" + rList[i]["tentativeAmount"];
                 cell = row.insertCell(z++);
                 cell.innerHTML = rList[i]["gradeUploaded"];
                 cell = row.insertCell(z++);
